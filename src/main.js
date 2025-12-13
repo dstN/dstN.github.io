@@ -4,18 +4,9 @@ import VueFullPage from "vue-fullpage.js";
 import "./assets/scss/style.scss";
 import App from "./App.vue";
 
-// Defer FontAwesome loading to improve FCP
-const loadFontAwesome = () => {
-  import("@fortawesome/fontawesome-free/css/all.css");
-};
+// Load FontAwesome asynchronously with font-display: swap for better FCP
+import("./assets/scss/fontawesome-swap.scss");
 
 const app = createApp(App);
 app.use(VueFullPage);
 app.mount("#app");
-
-// Load FontAwesome after initial render
-if (document.readyState === "complete") {
-  loadFontAwesome();
-} else {
-  window.addEventListener("load", loadFontAwesome);
-}
