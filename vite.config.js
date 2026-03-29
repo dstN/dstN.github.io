@@ -3,7 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import autoprefixer from "autoprefixer";
 import path from "path";
 import purgecss from "vite-plugin-purgecss";
-import critical from "rollup-plugin-critical";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -42,19 +41,6 @@ export default defineConfig({
     // Optimize build for better performance
     rollupOptions: {
       plugins: [
-        critical({
-          criticalUrl: './dist/index.html',
-          criticalBase: './dist/',
-          criticalPages: [
-            { uri: '', template: 'index' },
-          ],
-          criticalConfig: {
-            inline: true,
-            extract: false,
-            width: 430,
-            height: 900,
-          },
-        }),
       ],
       output: {
         // Manual chunk splitting for better caching and loading
