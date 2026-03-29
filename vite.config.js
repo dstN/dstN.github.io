@@ -2,18 +2,21 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import autoprefixer from "autoprefixer";
 import path from "path";
-import purgecss from "vite-plugin-purgecss";
+import critical from "rollup-plugin-critical";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    // (Critical CSS plugin removed due to lack of support)
-    // (Compression plugins removed; not used by GitHub Pages)
-    // Remove unused CSS
-    purgecss({
-      content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-      safelist: [/is-/, /has-/, /fa-/, /icon/], // keep Bulma/Vue/FontAwesome classes
+    critical({
+      criticalUrl: "./dist/index.html",
+      criticalBase: "./dist/",
+      criticalPages: [{ uri: "", template: "index" }],
+      criticalConfig: {
+        inline: true,
+        extract: false,
+        width: 430,
+        height: 900,
+      },
     }),
   ],
   server: {
@@ -40,8 +43,7 @@ export default defineConfig({
   build: {
     // Optimize build for better performance
     rollupOptions: {
-      plugins: [
-      ],
+      plugins: [],
       output: {
         // Manual chunk splitting for better caching and loading
         manualChunks: {

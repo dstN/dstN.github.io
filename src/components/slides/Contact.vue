@@ -45,7 +45,10 @@ const socials = [
                 class="tag is-primary is-size-3-mobile is-size-3-tablet is-size-5-desktop is-size-3-widescreen is-size-3-fullhd"
               >
                 <span class="icon is-large">
-                  <font-awesome-icon :icon="item.icon" size="lg" />
+                  <font-awesome-icon
+                    :icon="item.icon"
+                    size="lg"
+                  />
                 </span>
               </span>
               <span
@@ -61,5 +64,4 @@ const socials = [
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
