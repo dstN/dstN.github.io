@@ -2,13 +2,13 @@
 const socials = [
   {
     platform: "github",
-    icon: "fab fa-github",
+    icon: ["fab", "github"],
     name: "Github",
     link: "https://github.com/dstN",
   },
   {
     platform: "twitter",
-    icon: "fab fa-twitter",
+    icon: ["fab", "twitter"],
     name: "Twitter",
     link: "https://twitter.com/dstNjs",
   },
@@ -45,8 +45,7 @@ const socials = [
                 class="tag is-primary is-size-3-mobile is-size-3-tablet is-size-5-desktop is-size-3-widescreen is-size-3-fullhd"
               >
                 <span class="icon is-large">
-                  <i :class="`fa-lg ${item.icon}`"></i>
-                  <!-- Computed values from Main.vue -->
+                  <font-awesome-icon :icon="item.icon" size="lg" />
                 </span>
               </span>
               <span
@@ -63,6 +62,4 @@ const socials = [
 </template>
 
 <style scoped>
-@import "@node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css";
-@import "@node_modules/@fortawesome/fontawesome-free/css/brands.css";
 </style>

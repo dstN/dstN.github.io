@@ -26,34 +26,36 @@ const options = {
 </script>
 
 <template>
-  <div
-    class="fullpage-wrapper"
-    :class="props.toggle ? 'blurred' : ''"
-  >
-    <full-page
-      ref="fullpage"
-      :options="options"
-      id="fullpage"
+  <main>
+    <div
+      class="fullpage-wrapper"
+      :class="props.toggle ? 'blurred' : ''"
     >
-      <TheSlide component="Home" />
-      <TheSlide
-        component="About"
-        :isDesktop="true"
-        :isFooter="false"
-      />
-      <TheSlide
-        component="Work"
-        :isDesktop="true"
-        :isFooter="false"
-        class="work"
-      />
-      <TheSlide
-        component="Contact"
-        :isDesktop="true"
-        :isFooter="true"
-      />
-    </full-page>
-  </div>
+      <full-page
+        ref="fullpage"
+        :options="options"
+        id="fullpage"
+      >
+        <TheSlide component="Home" />
+        <TheSlide
+          component="About"
+          :isDesktop="true"
+          :isFooter="false"
+        />
+        <TheSlide
+          component="Work"
+          :isDesktop="true"
+          :isFooter="false"
+          class="work"
+        />
+        <TheSlide
+          component="Contact"
+          :isDesktop="true"
+          :isFooter="true"
+        />
+      </full-page>
+    </div>
+  </main>
 </template>
 
 <style>
@@ -74,7 +76,8 @@ div.section .fp-controlArrow,
 div.slide > div {
   transform: matrix3d(0.85, 0, 0, 0, 0, 0.85, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
   opacity: 0;
-  transition: opacity 0.35s cubic-bezier(0.5, 0, 0, 1) 0s,
+  transition:
+    opacity 0.35s cubic-bezier(0.5, 0, 0, 1) 0s,
     transform 0.35s cubic-bezier(0.5, 0, 0, 1) 0s;
 }
 

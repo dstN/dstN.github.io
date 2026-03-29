@@ -26,6 +26,7 @@
           src="/dustin_tramm.png"
           width="364"
           height="364"
+          fetchpriority="high"
         />
       </picture>
     </figure>
