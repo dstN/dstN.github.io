@@ -13,7 +13,7 @@
     "vue-fullpage.js": "^0.2.22"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@fortawesome/fontawesome-free": "^7.2.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "autoprefixer": "^10.4.21",
     "bulma": "^0.9.4",

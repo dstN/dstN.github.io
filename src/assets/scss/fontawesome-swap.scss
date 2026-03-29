@@ -6,8 +6,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("~@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2") format("woff2"),
-       url("~@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf") format("truetype");
+  src: url("@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2") format("woff2"),
+       url("@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf") format("truetype");
 }
 
 @font-face {
@@ -15,8 +15,8 @@
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url("~@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2") format("woff2"),
-       url("~@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf") format("truetype");
+  src: url("@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2") format("woff2"),
+       url("@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf") format("truetype");
 }
 
 @font-face {
@@ -24,13 +24,13 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("~@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2") format("woff2"),
-       url("~@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf") format("truetype");
+  src: url("@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2") format("woff2"),
+       url("@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf") format("truetype");
 }
 
 // Import the rest of FontAwesome CSS (icons, utilities, etc.)
 // But skip the original @font-face declarations since we override them above
-@import "~@fortawesome/fontawesome-free/css/fontawesome.css";
-@import "~@fortawesome/fontawesome-free/css/solid.css";
-@import "~@fortawesome/fontawesome-free/css/regular.css";
-@import "~@fortawesome/fontawesome-free/css/brands.css";
+@import "@fortawesome/fontawesome-free/css/fontawesome.css";
+@import "@fortawesome/fontawesome-free/css/solid.css";
+@import "@fortawesome/fontawesome-free/css/regular.css";
+@import "@fortawesome/fontawesome-free/css/brands.css";
