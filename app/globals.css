@@ -13,7 +13,7 @@
   --popover-foreground: oklch(0.15 0.005 270);
 
   /* Accent: Magenta → PRIMARY */
-  --primary: oklch(0.55 0.25 330);
+  --primary: oklch(0.45 0.25 330);
   --primary-foreground: oklch(0.98 0 0);
 
   /* Accent: Cyan → SECONDARY */
@@ -22,7 +22,7 @@
 
   /* Muted */
   --muted: oklch(0.93 0.003 270);
-  --muted-foreground: oklch(0.45 0 0);
+  --muted-foreground: oklch(0.4 0 0);
 
   /* Accent */
   --accent: oklch(0.55 0.25 330);
@@ -57,14 +57,14 @@
   --popover: oklch(0.09 0.005 270);
   --popover-foreground: oklch(0.92 0 0);
 
-  --primary: oklch(0.65 0.25 330);
+  --primary: oklch(0.45 0.25 330);
   --primary-foreground: oklch(0.98 0 0);
 
   --secondary: oklch(0.78 0.15 195);
   --secondary-foreground: oklch(0.07 0.005 270);
 
   --muted: oklch(0.16 0.005 270);
-  --muted-foreground: oklch(0.55 0 0);
+  --muted-foreground: oklch(0.65 0 0);
 
   --accent: oklch(0.65 0.25 330);
   --accent-foreground: oklch(0.98 0 0);
