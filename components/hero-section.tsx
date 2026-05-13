@@ -19,23 +19,25 @@ export function HeroSection() {
 
   useEffect(() => {
     const currentRole = roles[roleIndex]
+    
+    if (!isDeleting && displayedText === currentRole) {
+      const timeout = setTimeout(() => setIsDeleting(true), 2000)
+      return () => clearTimeout(timeout)
+    }
+
+    if (isDeleting && displayedText === "") {
+      setIsDeleting(false)
+      setRoleIndex((prev) => (prev + 1) % roles.length)
+      return
+    }
+
     const timeout = setTimeout(
       () => {
-        if (!isDeleting) {
-          setDisplayedText(currentRole.slice(0, displayedText.length + 1))
-          if (displayedText === currentRole) {
-            setTimeout(() => setIsDeleting(true), 2000)
-          }
-        } else {
-          setDisplayedText(currentRole.slice(0, displayedText.length - 1))
-          if (displayedText === "") {
-            setIsDeleting(false)
-            setRoleIndex((prev) => (prev + 1) % roles.length)
-          }
-        }
+        setDisplayedText(currentRole.slice(0, displayedText.length + (isDeleting ? -1 : 1)))
       },
       isDeleting ? 40 : 80
     )
+
     return () => clearTimeout(timeout)
   }, [displayedText, isDeleting, roleIndex])
 
