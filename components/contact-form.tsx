@@ -107,7 +107,7 @@ export function ContactForm() {
 					)}
 
 					{/* Honeypot — invisible to humans, catches bots */}
-					<input type="text" name="botcheck" className="hidden" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+					<input type="text" id="botcheck" name="botcheck" aria-label="Bot check" className="hidden" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
 					<div>
 						<label htmlFor="name" className="block text-xs font-mono text-muted-foreground mb-1.5 uppercase tracking-wider">
