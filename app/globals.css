@@ -1,6 +1,78 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "Lexend";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/lexend/lexend-400.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-400.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Lexend";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/lexend/lexend-500.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-500.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Lexend";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/lexend/lexend-600.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-600.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Lexend";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/lexend/lexend-700.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-700.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/geist-mono/geist-mono-400.woff2") format("woff2"),
+       url("/fonts/geist-mono/geist-mono-400.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/geist-mono/geist-mono-500.woff2") format("woff2"),
+       url("/fonts/geist-mono/geist-mono-500.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/geist-mono/geist-mono-600.woff2") format("woff2"),
+       url("/fonts/geist-mono/geist-mono-600.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/geist-mono/geist-mono-700.woff2") format("woff2"),
+       url("/fonts/geist-mono/geist-mono-700.woff") format("woff");
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /* ─── Light Mode (Default) ─── */
@@ -86,7 +158,7 @@
 
 /* ─── Tailwind v4 Theme Registration ─── */
 @theme inline {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Lexend", sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 
   --color-background: var(--background);
