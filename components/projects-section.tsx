@@ -27,6 +27,17 @@ const projects = [
     accent: "secondary" as const,
   },
   {
+    title: "fli",
+    slug: "fli",
+    description:
+      "Local font importer package for bundling web fonts in static apps. Streamlines self-hosted typography without external Google font requests.",
+    tags: ["TypeScript", "NPM", "Local Fonts", "Static Export", "Font Loader"],
+    githubUrl: "https://github.com/dstN/fli",
+    npmUrl: "https://www.npmjs.com/package/@dstn/fli",
+    category: "NPM PACKAGE",
+    accent: "secondary" as const,
+  },
+  {
     title: "Twitter Archiver",
     slug: "twitter-archiver",
     description:
