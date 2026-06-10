@@ -90,8 +90,8 @@
         return;
       }
       charIdx += deleting ? -1 : 1;
-      el.textContent = current.slice(0, charIdx);
-      el.setAttribute("aria-label", current);
+      el!.textContent = current.slice(0, charIdx);
+      el!.setAttribute("aria-label", current);
       setTimeout(tick, deleting ? 40 : 80);
     }
 

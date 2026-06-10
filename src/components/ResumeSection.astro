@@ -53,22 +53,46 @@ const timeline = [
       10+ years of building for the web — from apprenticeship to senior frontend.
     </p>
 
-    <div class="timeline-strip" style="margin-top: var(--s-2xl);">
-      {timeline.map((entry) => (
-        <div class={`timeline-card ${entry.current ? "current" : ""}`}>
-          <span class="timeline-date">{entry.date}</span>
-          <span class="timeline-title">
-            {entry.title}
-            {entry.current && <span class="badge-current">now</span>}
-          </span>
-          <span class="timeline-org">{entry.org}</span>
-          {entry.skills.length > 0 && (
-            <div class="timeline-tags">
-              {entry.skills.map(s => <span class="tag">{s}</span>)}
-            </div>
-          )}
-        </div>
-      ))}
+    <div class="timeline-container" id="timeline-container">
+      <div class="timeline-strip" id="timeline-strip" style="margin-top: var(--s-2xl);">
+        {timeline.map((entry) => (
+          <div class={`timeline-card ${entry.current ? "current" : ""}`}>
+            <span class="timeline-date">{entry.date}</span>
+            <span class="timeline-title">
+              {entry.title}
+              {entry.current && <span class="badge-current">now</span>}
+            </span>
+            <span class="timeline-org">{entry.org}</span>
+            {entry.skills.length > 0 && (
+              <div class="timeline-tags">
+                {entry.skills.map(s => <span class="tag">{s}</span>)}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div class="timeline-hint" id="timeline-hint" aria-hidden="true">
+        <span>scroll →</span>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const strip = document.getElementById("timeline-strip");
+  const container = document.getElementById("timeline-container");
+  const hint = document.getElementById("timeline-hint");
+
+  if (strip && container) {
+    function checkScroll() {
+      const atEnd = strip!.scrollLeft + strip!.clientWidth >= strip!.scrollWidth - 8;
+      const atStart = strip!.scrollLeft <= 8;
+      container!.classList.toggle("scrolled-end", atEnd);
+      container!.classList.toggle("scrolled-start", atStart);
+      if (hint && atEnd) hint.style.opacity = "0";
+    }
+
+    strip.addEventListener("scroll", checkScroll, { passive: true });
+    checkScroll();
+  }
+</script>
