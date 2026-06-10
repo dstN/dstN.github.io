@@ -1,0 +1,74 @@
+---
+const timeline = [
+  {
+    title: "Front End Developer",
+    org: "conlabz GmbH",
+    date: "11/2020 – Present",
+    current: true,
+    skills: ["Vue.js", "Tailwind CSS", "Twig", "WordPress", "Docker"],
+  },
+  {
+    title: "Front End Developer",
+    org: "U. Günther GmbH",
+    date: "02/2017 – 01/2018",
+    skills: ["HTML", "CSS", "JavaScript", "jQuery", "WordPress"],
+  },
+  {
+    title: "Front End Developer",
+    org: "Freelancing",
+    date: "10/2016 – 01/2017",
+    skills: ["HTML", "CSS", "JavaScript", "WordPress"],
+  },
+  {
+    title: "Front End Developer",
+    org: "Sven Vörtmann Internet und IT Service",
+    date: "10/2015 – 09/2016",
+    skills: ["HTML", "CSS", "JavaScript", "Joomla"],
+  },
+  {
+    title: "Digital Media Designer",
+    org: "Zweiradcenter Melahn GmbH",
+    date: "05/2015 – 09/2015",
+    skills: ["Photoshop", "HTML", "CSS"],
+  },
+  {
+    title: "Front End Developer",
+    org: "art-box media GmbH",
+    date: "08/2014 – 03/2015",
+    skills: ["HTML", "CSS", "JavaScript", "jQuery", "WordPress"],
+  },
+  {
+    title: "Apprenticeship — Digital Media Designer",
+    org: "art-box media Werbeagentur GmbH",
+    date: "08/2011 – 07/2014",
+    skills: ["HTML", "CSS", "Photoshop", "InDesign", "Print"],
+  },
+];
+---
+
+<section id="resume" class="section">
+  <div class="w-wide">
+    <h2>Experience</h2>
+    <p style="margin-top: var(--s-sm); color: var(--ink-muted); font-size: 0.875rem;">
+      10+ years of building for the web — from apprenticeship to senior frontend.
+    </p>
+
+    <div class="timeline-strip" style="margin-top: var(--s-2xl);">
+      {timeline.map((entry) => (
+        <div class={`timeline-card ${entry.current ? "current" : ""}`}>
+          <span class="timeline-date">{entry.date}</span>
+          <span class="timeline-title">
+            {entry.title}
+            {entry.current && <span class="badge-current">now</span>}
+          </span>
+          <span class="timeline-org">{entry.org}</span>
+          {entry.skills.length > 0 && (
+            <div class="timeline-tags">
+              {entry.skills.map(s => <span class="tag">{s}</span>)}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

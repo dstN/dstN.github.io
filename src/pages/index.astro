@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navigation from "../components/Navigation.astro";
+import HeroSection from "../components/HeroSection.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
+import SkillsSection from "../components/SkillsSection.astro";
+import ResumeSection from "../components/ResumeSection.astro";
+import ContactSection from "../components/ContactSection.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout>
+  <Navigation />
+  <main>
+    <HeroSection />
+    <hr class="section-rule" aria-hidden="true" />
+    <ProjectsSection />
+    <hr class="section-rule" aria-hidden="true" />
+    <SkillsSection />
+    <hr class="section-rule" aria-hidden="true" />
+    <ResumeSection />
+    <hr class="section-rule" aria-hidden="true" />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

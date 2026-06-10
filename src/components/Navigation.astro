@@ -1,0 +1,133 @@
+---
+const navLinks = [
+  { href: "#projects", label: "Projects" },
+  { href: "#skills", label: "Stack" },
+  { href: "#resume", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+
+    <a href="#" class="nav-logo" aria-label="dstN — back to top">
+      dstN<span>.</span>
+    </a>
+
+    <div class="nav-links" id="nav-links">
+      {navLinks.map(({ href, label }) => (
+        <a href={href}>{label}</a>
+      ))}
+    </div>
+
+    <div class="nav-actions">
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+        type="button"
+      >
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <button
+        class="nav-menu-btn"
+        id="nav-menu-btn"
+        aria-label="Open menu"
+        aria-expanded="false"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Close menu" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    {navLinks.map(({ href, label }) => (
+      <a href={href} class="nav-mobile-link">{label}</a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  // Theme toggle — dark is default (no class), .light = light mode
+  const toggle = document.getElementById("theme-toggle")!;
+  const sunIcon = document.getElementById("icon-sun")!;
+  const moonIcon = document.getElementById("icon-moon")!;
+
+  function updateIcons() {
+    const isLight = document.documentElement.classList.contains("light");
+    // In dark mode, show sun icon (click to go light)
+    // In light mode, show moon icon (click to go dark)
+    sunIcon.style.display = isLight ? "none" : "block";
+    moonIcon.style.display = isLight ? "block" : "none";
+  }
+  updateIcons();
+
+  toggle.addEventListener("click", () => {
+    const isLight = document.documentElement.classList.toggle("light");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+    updateIcons();
+  });
+
+  // Scroll spy
+  const nav = document.getElementById("nav")!;
+  const navLinksContainer = document.getElementById("nav-links")!;
+  const links = navLinksContainer.querySelectorAll("a");
+  const sections = document.querySelectorAll("section[id]");
+
+  function updateScroll() {
+    // Nav background on scroll
+    nav.classList.toggle("scrolled", window.scrollY > 40);
+
+    // Active link
+    let currentId = "";
+    sections.forEach((section) => {
+      const el = section as HTMLElement;
+      if (window.scrollY >= el.offsetTop - 120) {
+        currentId = el.id;
+      }
+    });
+
+    links.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${currentId}`);
+    });
+  }
+
+  window.addEventListener("scroll", updateScroll, { passive: true });
+  updateScroll();
+
+  // Mobile menu
+  const menuBtn = document.getElementById("nav-menu-btn")!;
+  const mobileMenu = document.getElementById("nav-mobile")!;
+  const closeBtn = document.getElementById("nav-mobile-close")!;
+  const mobileLinks = mobileMenu.querySelectorAll("a");
+
+  function openMenu() {
+    mobileMenu.classList.add("open");
+    menuBtn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
+  menuBtn.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", closeMenu);
+  mobileLinks.forEach((link) => link.addEventListener("click", closeMenu));
+</script>

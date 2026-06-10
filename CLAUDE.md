@@ -8,79 +8,58 @@
 
 | Layer | Technology | Version | Notes |
 |:---|:---|:---|:---|
-| **Framework** | Next.js | 16.x | App Router, Turbopack, `output: 'export'` (GitHub Pages) |
-| **Runtime** | React | 19.x | React Compiler aktiv, Server Components default |
-| **Language** | TypeScript | 5.x | Strict Mode, keine `any` Types |
-| **Styling** | Tailwind CSS | 4.x | CSS-First Config, `@theme inline`, oklch() |
-| **Animations** | tw-animate-css | latest | Ersetzt tailwindcss-animate |
-| **UI Primitives** | radix-ui | unified | Einzelne `@radix-ui/react-*` sind deprecated |
-| **Icons** | lucide-react | 1.x | Tree-shakable — Brand Icons als Custom SVGs (`components/icons.tsx`) |
-| **Validation** | Zod | 4.x | Client-Side Validation (kein Server bei static export) |
-| **Email** | — | — | mailto: Fallback (static export, kein Server-Backend) |
-| **Analytics** | @vercel/analytics | latest | Nur wenn auf Vercel deployed |
+| **Framework** | Astro | 6.4.x | Static output, zero-JS-by-default, Islands Architecture |
+| **Language** | TypeScript | 5.x | Strict Mode via Astro preset |
+| **Styling** | Vanilla CSS | Native | CSS nesting, oklch(), custom properties — no Tailwind |
+| **CSS Minification** | LightningCSS | latest | Via Vite integration |
+| **Fonts** | Local (via @dstn/fli) | latest | GDPR-compliant, self-hosted Lexend |
+| **Icons** | Inline SVGs | — | No external icon library |
+| **Contact** | Web3Forms | — | Client-side form submission |
+| **AI Skills** | impeccable (pbakaus) | latest | Design language skill installed via `npx skills add` |
+| **Deployment** | GitHub Pages | — | `dist/` output via GitHub Actions |
 
 ---
 
 ## 2. Architecture Principles
 
-### Server-First Ansatz
+### Zero-JS-by-Default
 
 ```
-Jede neue Komponente startet als Server Component.
-"use client" wird NUR hinzugefügt wenn eine dieser Bedingungen zutrifft:
+Astro components render to static HTML by default.
+JavaScript is only added via <script> tags for interactive islands.
 
-✅ useState / useReducer / useActionState
-✅ useEffect / useLayoutEffect
-✅ Browser APIs (window, document, navigator)
-✅ Event Handlers (onClick, onChange, onScroll)
-✅ React Context (useContext)
+Interactive components (have <script> tags):
+✅ Navigation (scroll spy, mobile menu, theme toggle)
+✅ HeroSection (role crossfade, email obfuscation)
+✅ ContactSection (form validation, Web3Forms submission)
+✅ Footer (legal modal open/close)
 
-❌ NICHT für: Datums-Formatierung, statische Listen, Layouts, Icons
+Static components (zero JS):
+✅ AboutSection (static markup)
+✅ ProjectsSection (static markup)
+✅ SkillsSection (static markup)
+✅ ResumeSection (static markup)
 ```
 
-### Component Hierarchy
+### Component Pattern
 
-```
-Server Component (default)
-├── Rendert statisches Markup, Layouts, Daten
-├── Kann async sein (await fetch, await db.query)
-├── Kann "use cache" Directive nutzen
-│
-└── Client Component ("use client")
-    ├── So klein wie möglich halten
-    ├── Nur interaktive UI-Elemente
-    └── Keine Daten-Fetching-Logik
-```
+All components use the `.astro` single-file format:
 
-### Hybrid Component Pattern
+```astro
+---
+// Frontmatter: TypeScript, runs at build time
+const data = [...];
+---
 
-Für Sections die sowohl statischen Content als auch Interaktivität haben:
+<!-- Template: HTML with Astro expressions -->
+<section>
+  {data.map(item => <div>{item.name}</div>)}
+</section>
 
-```tsx
-// ✅ RICHTIG: Server Component mit eingebettetem Client Component
-// components/projects-section.tsx (Server Component — KEIN "use client")
-import { ProjectCarousel } from "./project-carousel" // Client Component
-
-export function ProjectsSection() {
-  return (
-    <section id="projects" className="relative py-32">
-      <h2>Featured Projects</h2>           {/* Server-rendered */}
-      <ProjectCarousel projects={data} />   {/* Client Island */}
-    </section>
-  )
-}
-
-// components/project-carousel.tsx
-"use client"
-// Nur der interaktive Carousel-State lebt hier
-```
-
-```tsx
-// ❌ FALSCH: Gesamte Section als Client Component
-"use client"
-export function ProjectsSection() {
-  // ... alles als Client Component
-}
+<!-- Client-side JS (optional — this is the "island") -->
+<script>
+  document.getElementById(...)
+</script>
 ```
 
 ---
@@ -89,189 +68,153 @@ export function ProjectsSection() {
 
 ### TypeScript
 
-- **Strict Mode** ist Pflicht (`"strict": true` in tsconfig)
-- **Keine `any` Types.** Wenn der Typ unklar ist, `unknown` + Type Guard verwenden
-- **`ignoreBuildErrors: true` ist VERBOTEN** in next.config
-- Server Action Return Types explizit typisieren:
+- **Strict Mode** is enabled via `extends: "astro/tsconfigs/strict"`
+- **No `any` types.** Use `unknown` + type guards
+- Path alias: `@/*` maps to `src/*`
 
-```typescript
-type ActionState = {
-  success: boolean
-  error?: string | Record<string, string[]>
-}
+### CSS
+
+- **No Tailwind.** All styling uses vanilla CSS with custom properties
+- **No hardcoded color values in components.** Always use `var(--token)` or `oklch(from var(--token) ...)`
+- **CSS nesting** is used for component scoping
+
+```css
+/* ✅ CORRECT */
+color: var(--primary);
+background: oklch(from var(--primary) l c h / 0.15);
+
+/* ❌ FORBIDDEN */
+color: #ff00ff;
+color: oklch(0.65 0.25 330);  /* hardcoded, use variable */
 ```
 
-### React 19 — Verbotene Patterns
+### Interactivity
 
-Der React Compiler übernimmt die Memoization. Diese manuellen Optimierungen sind **verboten** in Custom-Code:
-
-```tsx
-// ❌ VERBOTEN in Custom Components
-useMemo(() => ..., [deps])
-useCallback(() => ..., [deps])
-React.memo(Component)
-
-// ✅ RICHTIG: Einfach den Code schreiben, Compiler optimiert
-const computedValue = expensiveComputation(data)
-const handler = () => doSomething()
-```
-
-> **Ausnahme:** shadcn/ui Basis-Komponenten (`components/ui/`) dürfen diese Patterns behalten, da sie extern maintained sind.
-
-### React 19 — Bevorzugte Patterns
-
-```tsx
-// ✅ Form Handling mit useActionState
-const [state, formAction, isPending] = useActionState(serverAction, initialState)
-
-// ✅ Form Status in Child Components
-function SubmitButton() {
-  const { pending } = useFormStatus()
-  return <button disabled={pending}>Submit</button>
-}
-
-// ✅ Optimistic Updates
-const [optimisticItems, addOptimistic] = useOptimistic(items)
-
-// ❌ VERALTETES Pattern
-const [isLoading, setIsLoading] = useState(false)
-const handleSubmit = async (e) => {
-  e.preventDefault()
-  setIsLoading(true)
-  // ...
-}
-```
-
-### Client-Side Validation (Static Export)
-
-Da das Projekt als statischer Export auf GitHub Pages deployed wird, gibt es keine Server Actions.
-Formulare nutzen Client-Side Zod Validation + mailto: Fallback:
-
-```typescript
-// ✅ Client-Side Validation für Static Export
-import { z } from "zod"
-
-const schema = z.object({
-  name: z.string().min(2).max(100),
-  email: z.string().email(),
-  message: z.string().min(10).max(5000),
-})
-
-// Im Client Component:
-const result = schema.safeParse(formData)
-if (!result.success) {
-  // Field-level Errors anzeigen
-}
-```
-
-> **Upgrade-Pfad:** Wenn das Deployment zu Vercel wechselt, können Server Actions
-> mit `useActionState` und `useFormStatus` eingeführt werden. Die Zod-Schemas
-> können dann direkt in Server Actions wiederverwendet werden.
+- **No React, Vue, or any framework runtime.**
+- Interactive features use vanilla TypeScript in `<script>` tags
+- DOM queries use `document.getElementById()` / `document.querySelectorAll()`
 
 ---
 
-## 4. Styling Guidelines
+## 4. Design System
 
-### Tailwind v4 — CSS-First Configuration
+### Identity: PCB Green + Copper ("Drenched")
 
-Alle Design-Tokens leben in `app/globals.css` unter `@theme inline`:
+The design language is **"circuit board under a macro lens"** — technically dense, structurally elegant, slightly alien. Not performing "developer" — being one.
 
-```css
-@import "tailwindcss";
-@import "tw-animate-css";
+**Color strategy: Drenched.** The background environment IS the brand. Color is not an accent; it is the atmospheric space content lives within.
 
-@custom-variant dark (&:is(.dark *));
+| Role | Dark Mode | Light Mode | Usage |
+|:---|:---|:---|:---|
+| **Background** | `oklch(0.13 0.02 160)` | `oklch(0.97 0.008 160)` | Body, page bg |
+| **Surface 1** | `oklch(0.18 0.02 160)` | `oklch(0.99 0.005 160)` | Cards, elevated panels |
+| **Surface 2** | `oklch(0.22 0.025 160)` | `oklch(0.95 0.008 160)` | Hover states, inputs |
+| **Surface 3** | `oklch(0.26 0.025 160)` | `oklch(0.92 0.01 160)` | Active states |
+| **Primary** | `oklch(0.62 0.10 160)` | `oklch(0.42 0.10 160)` | Links, buttons, roles |
+| **Accent (copper)** | `oklch(0.72 0.14 65)` | `oklch(0.55 0.14 65)` | Logo dot, highlights, current markers |
+| **Text** | `oklch(0.93 0.01 160)` | `oklch(0.18 0.015 160)` | Body text |
+| **Muted** | `oklch(0.65 0.015 160)` | `oklch(0.45 0.015 160)` | Secondary text |
+| **Border** | `oklch(0.28 0.02 160)` | `oklch(0.85 0.01 160)` | Dividers, card edges |
 
-:root {
-  --background: oklch(0.12 0.01 270);
-  --primary: oklch(0.75 0.25 330);         /* Neon Magenta */
-  --secondary: oklch(0.7 0.18 180);        /* Neon Turquoise */
-  --neon-magenta: oklch(0.75 0.25 330);
-  --neon-turquoise: oklch(0.7 0.18 180);
-  /* ... */
-}
+**Rules:**
+- Every neutral is chromatic — zero pure grays. All neutrals carry chroma `0.01–0.025` at hue 160°.
+- No indigo anywhere. Indigo is an AI-default dark pattern.
+- Copper accent is surgical — logo dot, "current" badge, hover underlines, timeline node. Not a flood.
+- Dark mode is the primary design target (default, no class). Light mode adds `.light` class.
+- Dark mode reduces body text weight to 350 (light text on dark reads heavier).
 
-@theme inline {
-  --color-primary: var(--primary);
-  --color-neon-magenta: var(--neon-magenta);
-  /* Tailwind nutzt diese automatisch als Utility-Klassen */
-}
+### Typography
+
+- **Font:** Lexend (self-hosted, weights 400/500/600/700)
+- **Display:** `clamp()` fluid sizing, `letter-spacing: -0.02em` to `-0.03em` max
+- **Body:** 1rem / 1.65 line-height, `max-width: 65ch`, `text-wrap: pretty`
+- **Headings:** `text-wrap: balance`, weight 700, line-height 1.15
+
+### Theme System
+
+- Dark = default (no class on `<html>`)
+- Light = `.light` class on `<html>`
+- FOUC prevention: inline `<script>` in `<head>` checks `localStorage("theme")` before paint
+- Toggle stores preference in `localStorage`
+- `prefers-color-scheme` honored as initial default
+
+### Three CSS Files
+
+| File | Purpose |
+|:---|:---|
+| `src/styles/global.css` | Design tokens, @font-face, base reset, atmospheric gradients |
+| `src/styles/animations.css` | @keyframes, reduced-motion fallbacks |
+| `src/styles/components.css` | Component-level styles (nav, sections, buttons, forms) |
+
+---
+
+## 5. Design Anti-Patterns (from impeccable audit)
+
+These are **banned** in this project. If you're about to write any of these, stop and restructure.
+
+### Structural bans
+- **The Six Identical Sections pattern.** Hero → About → Projects → Skills → Experience → Contact in the same order with the same layout rhythm. Vary widths, density, and spacing.
+- **"Section header" + content block repetition.** Not every section needs an h2 + subtitle paragraph banner.
+- **Identical card grids.** Cards with rounded corners in a 2-col grid. Cards are the lazy answer. Use lists, tables, or dense typography instead.
+- **Pill tag grids for skills.** Two columns of rounded pills. Use a spec-sheet or comma-separated inline format.
+- **Vertical timeline with dots.** Every portfolio uses this for experience. Use a horizontal layout, compact list, or table.
+- **Contact = form on right, info on left.** The template layout.
+
+### CSS bans (from impeccable absolute bans)
+- **Side-stripe borders.** `border-left/right > 1px` as accent. Use full borders, tints, or nothing.
+- **Gradient text.** `background-clip: text` with gradients. Use solid colors.
+- **Glassmorphism as default.** Blurs and glass cards decoratively. Rare and purposeful only.
+- **Ghost cards.** `border: 1px solid X` + `box-shadow: 0 Npx Mpx` with blur ≥16px on the same element.
+- **Over-rounded cards.** `border-radius > 16px` on cards/sections. Cards top out at 12-16px.
+- **Tiny uppercase tracked eyebrow above every section.** One named kicker is voice; every section is AI grammar.
+- **Numbered section markers (01 / 02 / 03).** Numbers earn their place only when the section IS a sequence.
+
+### Content bans
+- **Fabricated experience descriptions.** Only real data: titles, dates, companies, tech skills.
+- **"I'm a passionate developer" copy.** Show, don't declare.
+- **Rotating role text.** Decorative, not functional.
+- **Stock "developer" imagery.** Terminal mockups, matrix rain, scan lines, blinking cursors.
+
+---
+
+## 6. File Structure
+
 ```
+src/
+├── layouts/
+│   └── BaseLayout.astro         # Root HTML, meta, font preloads, CSS imports
+├── components/
+│   ├── Navigation.astro         # Fixed nav + scroll spy + mobile menu + theme toggle
+│   ├── HeroSection.astro        # Name + role + description + CTAs + social
+│   ├── AboutSection.astro       # Profile image + bio text
+│   ├── ProjectsSection.astro    # Project showcase (6 projects)
+│   ├── SkillsSection.astro      # Tech stack display
+│   ├── ResumeSection.astro      # Work experience timeline
+│   ├── ContactSection.astro     # Contact form + info
+│   └── Footer.astro             # Footer + legal modal
+├── styles/
+│   ├── global.css               # Design tokens + PCB palette
+│   ├── animations.css           # Keyframes + reduced-motion
+│   └── components.css           # Component styles
+└── pages/
+    └── index.astro              # Single-page assembly
 
-### Regeln
+public/
+├── fonts/
+│   └── lexend/                  # Self-hosted (via @dstn/fli)
+├── images/
+│   └── dustin-profile.webp
+├── logo.svg
+├── manifest.json
+├── web-app-manifest-192x192.png
+└── web-app-manifest-512x512.png
 
-1. **Keine hardcoded Farbwerte in Komponenten:**
-
-```tsx
-// ❌ VERBOTEN
-className="text-[#ff00ff]"
-style={{ color: "oklch(0.75 0.25 330)" }}
-
-// ✅ RICHTIG
-className="text-primary"
-className="text-neon-magenta"
-```
-
-2. **Keine `style jsx`** — alles über Tailwind oder `globals.css`
-
-3. **Utility-Klassen für Custom Effects** in `globals.css`:
-
-```css
-.glass { ... }
-.neon-glow-magenta { ... }
-.text-glow-magenta { ... }
-```
-
-4. **Responsive Design:** Mobile-First mit Tailwind Breakpoints (`sm:`, `md:`, `lg:`, `xl:`)
-
-5. **`prefers-reduced-motion`** respektieren:
-
-```css
-@media (prefers-reduced-motion: reduce) {
-  .animate-glow-pulse,
-  .animate-float,
-  .animate-flicker {
-    animation: none;
-  }
-}
+.agents/skills/impeccable/       # Design language skill
 ```
 
 ---
 
-## 5. File Structure
-
-```
-app/
-├── globals.css          # Design System (Tailwind @theme, Custom Utilities)
-├── layout.tsx           # Root Layout (Server Component)
-└── page.tsx             # Home Page (Server Component)
-
-components/
-├── icons.tsx            # Brand Icon SVGs (Github, Linkedin, X)
-├── navigation.tsx       # Client Component (Scroll + Mobile Menu)
-├── hero-section.tsx     # Client Component (Mouse Tracking)
-├── about-section.tsx    # Server Component
-├── projects-section.tsx # Server Component (Shell) + ProjectCarousel (Client)
-├── project-carousel.tsx # Client Component (Carousel State)
-├── skills-section.tsx   # Server Component (CSS-only Animations)
-├── resume-section.tsx   # Server Component (Shell) + ResumeTimeline (Client)
-├── resume-timeline.tsx  # Client Component (Accordion State)
-├── contact-section.tsx  # Server Component (Shell) + ContactForm (Client)
-├── contact-form.tsx     # Client Component (Form State + Zod Validation)
-├── footer.tsx           # Server Component
-└── scan-line.tsx        # Server Component (CSS-only Animation)
-
-hooks/
-├── use-in-view.ts       # IntersectionObserver Hook (Client)
-└── use-mobile.ts        # Mobile Detection Hook (Client)
-
-lib/
-└── utils.ts             # cn() Utility
-```
-
----
-
-## 6. Performance Budget
+## 7. Performance Budget
 
 | Metric | Target |
 |:---|:---|
@@ -279,59 +222,48 @@ lib/
 | Lighthouse Accessibility | 100 |
 | Lighthouse Best Practices | 100 |
 | Lighthouse SEO | 100 |
-| First Contentful Paint | < 1.0s |
-| Largest Contentful Paint | < 2.0s |
-| Cumulative Layout Shift | < 0.05 |
-| Total Blocking Time | < 50ms |
+| Build Time | < 2s |
+| JS Shipped | Only interactive islands (~5KB total) |
+| External Requests | Zero (fonts, icons all self-hosted) |
 
-### Image Rules
-- Profile Image: `priority`, `sizes="(max-width: 640px) 112px, (max-width: 768px) 160px, (max-width: 1024px) 224px, 256px"`
-- Project Images: `loading="lazy"`, `sizes` prop, WebP/AVIF Format
-- Dekorative Bilder: `aria-hidden="true"`, `alt=""`
+### Rules
 
-### Bundle Rules
-- Kein Import von gesamten Icon-Libraries
-- Dynamic Imports für schwere Client Components
-- Kein Barrel-File Re-Export
+- Zero external CDN requests (GDPR compliance)
+- Profile image: `loading="eager"`, `decoding="async"`
+- All other images: `loading="lazy"`
+- Font preloading for critical weights (400, 700)
+- `font-display: swap` on all @font-face
 
 ---
 
-## 7. Workflow — Neue Features implementieren
+## 8. Workflow — Adding New Features
 
-### Checkliste für jede neue Komponente:
+### Checklist:
 
-1. **Ist sie ein Server oder Client Component?**
-   - Default: Server Component
-   - Nur Client wenn Browser-API nötig
+1. **Is it static or interactive?**
+   - Default: Static Astro component (zero JS)
+   - Only add `<script>` if browser interactivity is needed
 
-2. **Braucht sie `"use cache"`?**
-   - Statische Daten die sich selten ändern → ja
-   - Request-spezifische Daten → nein
+2. **Design-Check (impeccable):**
+   - Does NOT match any anti-pattern from Section 5
+   - Uses CSS custom properties (no hardcoded values)
+   - Respects dark/light mode (`.light` class, not `.dark`)
+   - Respects `prefers-reduced-motion`
+   - Mobile-first responsive
+   - Passes the "could someone say AI made this?" test — if yes, redesign
 
-3. **Styling-Check:**
-   - Nur Theme-Variablen verwenden
-   - Keine hardcoded Farben
-   - Mobile-First responsive
-   - `prefers-reduced-motion` berücksichtigen
+3. **TypeScript-Check:**
+   - No `any` types
+   - Build passes: `npm run build`
 
-4. **TypeScript-Check:**
-   - Props Interface definiert?
-   - Keine `any` Types?
-   - Return Types explizit?
-
-5. **Performance-Check:**
-   - Images mit `next/image` + `sizes`?
-   - Keine unnötigen Client Boundaries?
-   - Keine manuellen `useMemo`/`useCallback`?
-
-6. **Build-Check:**
+4. **Build-Check:**
    ```bash
-   npx tsc --noEmit && npm run build
+   npm run build  # Must complete with zero errors
    ```
 
 ---
 
-## 8. Git Conventions
+## 9. Git Conventions
 
 ```
 feat: neue Sektion/Feature
@@ -345,5 +277,6 @@ docs: Dokumentation
 
 ---
 
-> **Letzte Aktualisierung:** Mai 2026
+> **Letzte Aktualisierung:** Juni 2026
 > **Maintainer:** Dustin
+> **Stack-Migration:** Next.js 16 → Astro 6.4 (Juni 2026)

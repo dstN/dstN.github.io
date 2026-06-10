@@ -1,35 +1,21 @@
 {
   "name": "dstn.github.io",
-  "version": "0.1.0",
+  "type": "module",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "lint": "eslint .",
-    "start": "next start"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "fonts": "fli download"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.14.0",
-    "next": "^16.2.6",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "tailwind-merge": "^3.3.1",
-    "zod": "^4.4.3"
+    "astro": "^6.4.5",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.9",
-    "@types/node": "^22",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "latest",
-    "postcss": "^8.5.14",
-    "tailwindcss": "^4.1.9",
-    "tw-animate-css": "^1.3.3",
-    "typescript": "^5"
-  },
-  "overrides": {
-    "postcss": "^8.5.14"
+    "@dstn/fli": "^1.0.0",
+    "lightningcss": "^1.32.0"
   }
 }

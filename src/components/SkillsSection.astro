@@ -1,0 +1,59 @@
+---
+const specs = [
+	{
+		label: 'Languages',
+		value: 'HTML, CSS, JavaScript, TypeScript',
+		primaries: ['HTML', 'CSS', 'JavaScript', 'TypeScript'],
+	},
+	{
+		label: 'Frameworks',
+		value: 'Vue.js, Nuxt, React, Next.js, NestJS, Twig, MJML',
+		primaries: ['Vue.js', 'Nuxt'],
+	},
+	{
+		label: 'Styling',
+		value: 'Tailwind CSS, SASS, CSS Layers, oklch(), Container Queries, Bootstrap',
+		primaries: ['Tailwind CSS', 'SASS', 'CSS Layers'],
+	},
+	{
+		label: 'CMS',
+		value: 'WordPress, Joomla, NEOS',
+		primaries: [],
+	},
+	{
+		label: 'Tooling',
+		value: 'Git, GitHub, Vite, Webpack, Docker, DDEV, npm, Postman, Figma',
+		primaries: ['Git', 'Vite'],
+	},
+	{
+		label: 'Practices',
+		value: 'Responsive Design, Accessibility, SEO, CI/CD, REST APIs',
+		primaries: ['Responsive Design', 'Accessibility'],
+	},
+];
+
+function renderValue(value: string, primaries: string[]): string {
+	if (primaries.length === 0) return value;
+	let result = value;
+	for (const p of primaries) {
+		result = result.replace(p, `<span class="primary-tech">${p}</span>`);
+	}
+	return result;
+}
+---
+
+<section id="skills" class="section">
+	<div class="w-narrow">
+		<h2>Stack</h2>
+		<div class="spec-sheet" style="margin-top: var(--s-2xl);">
+			{
+				specs.map((s) => (
+					<div class="spec-row">
+						<div class="spec-label">{s.label}</div>
+						<div class="spec-value" set:html={renderValue(s.value, s.primaries)} />
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

@@ -1,0 +1,235 @@
+/* ═══════════════════════════════════════════════════════════
+   Global — PCB Green + Copper Drenched
+   "Circuit board under a macro lens"
+   ═══════════════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ─── Font Face — Lexend ─── */
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/lexend/lexend-400.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-400.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/lexend/lexend-500.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-500.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/lexend/lexend-600.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-600.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/lexend/lexend-700.woff2") format("woff2"),
+       url("/fonts/lexend/lexend-700.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Tokens — Dark (default) ─── */
+
+:root {
+  --font-sans: "Lexend", system-ui, -apple-system, sans-serif;
+
+  /* PCB Body — deep oxide green-black */
+  --bg: oklch(0.12 0.02 155);
+  --bg-subtle: oklch(0.15 0.018 155);
+
+  /* Surfaces — elevated green-black */
+  --surface-1: oklch(0.17 0.018 155);
+  --surface-2: oklch(0.21 0.022 155);
+
+  /* Primary — oxide green */
+  --primary: oklch(0.62 0.10 155);
+  --primary-dim: oklch(0.48 0.07 155);
+
+  /* Accent — warm copper */
+  --accent: oklch(0.72 0.14 60);
+  --accent-dim: oklch(0.56 0.10 60);
+
+  /* Text */
+  --ink: oklch(0.92 0.008 155);
+  --ink-strong: oklch(0.97 0.004 155);
+  --ink-muted: oklch(0.58 0.012 155);
+
+  /* Borders */
+  --rule: oklch(0.24 0.015 155);
+  --rule-hover: oklch(0.34 0.02 155);
+
+  /* Semantic */
+  --destructive: oklch(0.60 0.20 25);
+  --success: oklch(0.65 0.18 145);
+
+  /* Spacing — 4pt base */
+  --s-2xs: 0.125rem;
+  --s-xs: 0.25rem;
+  --s-sm: 0.5rem;
+  --s-md: 0.75rem;
+  --s-lg: 1rem;
+  --s-xl: 1.5rem;
+  --s-2xl: 2rem;
+  --s-3xl: 3rem;
+  --s-4xl: 4rem;
+  --s-5xl: 6rem;
+  --s-6xl: 8rem;
+
+  /* Containers — varied widths for rhythm */
+  --w-narrow: 680px;
+  --w-base: 920px;
+  --w-wide: 1120px;
+  --w-pad: clamp(1.25rem, 5vw, 2.5rem);
+
+  /* Radii */
+  --r-sm: 4px;
+  --r-md: 6px;
+
+  /* Z-index */
+  --z-nav: 40;
+  --z-mobile: 45;
+  --z-modal: 50;
+
+  /* Easing */
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Light Mode ─── */
+
+.light {
+  --bg: oklch(0.97 0.006 155);
+  --bg-subtle: oklch(0.94 0.008 155);
+  --surface-1: oklch(0.99 0.004 155);
+  --surface-2: oklch(0.95 0.007 155);
+  --primary: oklch(0.40 0.10 155);
+  --primary-dim: oklch(0.33 0.08 155);
+  --accent: oklch(0.52 0.14 60);
+  --accent-dim: oklch(0.45 0.11 60);
+  --ink: oklch(0.20 0.015 155);
+  --ink-strong: oklch(0.12 0.02 155);
+  --ink-muted: oklch(0.48 0.012 155);
+  --rule: oklch(0.86 0.008 155);
+  --rule-hover: oklch(0.74 0.015 155);
+}
+
+/* ─── Body ─── */
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html:not(.light) body {
+  font-weight: 350;
+  line-height: 1.7;
+}
+
+/* ─── Typography ─── */
+
+h1, h2, h3 {
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.25rem, 5vw + 0.5rem, 3.5rem); letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2rem); }
+h3 { font-size: 1rem; }
+
+p {
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+strong { font-weight: 600; color: var(--ink-strong); }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; border: none; background: none; cursor: pointer; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ─── Focus ─── */
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Containers ─── */
+
+.w-narrow { max-width: var(--w-narrow); margin-inline: auto; padding-inline: var(--w-pad); }
+.w-base { max-width: var(--w-base); margin-inline: auto; padding-inline: var(--w-pad); }
+.w-wide { max-width: var(--w-wide); margin-inline: auto; padding-inline: var(--w-pad); }
+
+/* ─── Atmospheric bg ─── */
+
+html:not(.light) body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 25%, oklch(0.16 0.035 155 / 0.5), transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 75%, oklch(0.14 0.025 60 / 0.2), transparent 65%);
+  pointer-events: none;
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background: oklch(from var(--primary) l c h / 0.25);
+  color: var(--ink-strong);
+}
+
+/* ─── Scrollbar ─── */
+
+html:not(.light) {
+  scrollbar-color: var(--rule) var(--bg);
+}
+
+/* ─── Reduced Motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

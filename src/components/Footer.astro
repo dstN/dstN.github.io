@@ -1,0 +1,106 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="w-wide footer-inner">
+    <p class="footer-copy">© {currentYear} dstN. All rights reserved.</p>
+    <div class="footer-links">
+      <button type="button" id="legal-trigger">Legal</button>
+      <a href="https://github.com/dstN" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Legal Modal -->
+<div class="modal-backdrop" id="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="legal-title">Legal Information</h2>
+      <button class="modal-close" id="legal-close" aria-label="Close" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h3>Imprint</h3>
+      <p class="legal-meta">Information according to § 5 DDG:</p>
+      <p>Dustin Tramm<br/>c/o Impressumservice Dein-Impressum<br/>Stettiner Str. 41<br/>35410 Hungen<br/>Germany</p>
+      <p>Email: <a href="#" id="legal-email" data-u="dustin.tramm" data-d="yinside.de">dustin.tramm [at] yinside.de</a></p>
+      <a href="#contact" id="legal-contact-link" class="legal-cta">Open contact form</a>
+
+      <h3>Privacy Policy</h3>
+      <p>This website is designed with privacy in mind. It is a static site hosted on GitHub Pages. We do not use cookies, tracking scripts, or analytics services. No personal data is collected during your visit.</p>
+
+      <h4>Hosting &amp; Server Logs</h4>
+      <p>This website is hosted by GitHub Pages. The hosting provider automatically collects information in server log files (IP address, browser type, time). This is technically necessary to display the site securely. See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection" target="_blank" rel="noopener noreferrer">GitHub's privacy statement</a> for details.</p>
+
+      <h4>Contact Form</h4>
+      <p>When you use the contact form, your name, email, and message are transmitted to Web3Forms (web3forms.com) for email delivery. Web3Forms does not store your data beyond the delivery process. See their <a href="https://web3forms.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a> for details.</p>
+
+      <h4>Local Storage</h4>
+      <p>This site uses your browser's localStorage to remember your theme preference (light/dark mode). This data is stored only on your device and is never transmitted to any server.</p>
+
+      <h4>External Links</h4>
+      <p>This site contains links to external websites (GitHub, LinkedIn, etc.). We are not responsible for the privacy practices of these sites.</p>
+
+      <h4>Your Rights</h4>
+      <p>Under the GDPR, you have the right to access, rectification, erasure, and portability of your personal data. Since this site does not collect or store personal data, these rights are inherently fulfilled. For any questions, contact me via the email above.</p>
+
+      <h4>Fonts</h4>
+      <p>All fonts are self-hosted on this server. No requests are made to external font services (such as Google Fonts CDN). This ensures GDPR compliance for font delivery.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const trigger = document.getElementById("legal-trigger")!;
+  const modal = document.getElementById("legal-modal")!;
+  const closeBtn = document.getElementById("legal-close")!;
+
+  function openModal() {
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+    trigger.focus();
+  }
+
+  trigger.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+
+  // Close on backdrop click
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+  });
+
+  // Email obfuscation
+  const legalEmail = document.getElementById("legal-email");
+  if (legalEmail) {
+    const u = legalEmail.dataset.u;
+    const d = legalEmail.dataset.d;
+    const email = `${u}@${d}`;
+    legalEmail.setAttribute("href", `mailto:${email}`);
+    legalEmail.textContent = email;
+  }
+
+  // "Open contact form" — close modal, scroll to contact
+  const contactLink = document.getElementById("legal-contact-link");
+  if (contactLink) {
+    contactLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeModal();
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+</script>
