@@ -9,7 +9,7 @@
           <h1 class="opening-name">
             dstN<span>.</span>
           </h1>
-          <p class="opening-role">Front End Developer</p>
+          <p class="opening-role" id="hero-role" aria-label="Front End Developer">Front End Developer</p>
         </div>
 
         <div class="opening-bio">
@@ -65,5 +65,36 @@
     const u = emailLink.dataset.u;
     const d = emailLink.dataset.d;
     emailLink.setAttribute("href", `mailto:${u}@${d}`);
+  }
+
+  // Typewriter role rotation
+  const roles = ["Front End Developer", "UI/UX Enthusiast", "Open Source Builder"];
+  const el = document.getElementById("hero-role");
+  if (el) {
+    let roleIdx = 0;
+    let charIdx = roles[0].length;
+    let deleting = false;
+
+    el.classList.add("typing");
+
+    function tick() {
+      const current = roles[roleIdx];
+      if (!deleting && charIdx === current.length) {
+        setTimeout(() => { deleting = true; tick(); }, 2000);
+        return;
+      }
+      if (deleting && charIdx === 0) {
+        deleting = false;
+        roleIdx = (roleIdx + 1) % roles.length;
+        setTimeout(tick, 300);
+        return;
+      }
+      charIdx += deleting ? -1 : 1;
+      el.textContent = current.slice(0, charIdx);
+      el.setAttribute("aria-label", current);
+      setTimeout(tick, deleting ? 40 : 80);
+    }
+
+    setTimeout(() => { deleting = true; tick(); }, 2000);
   }
 </script>
