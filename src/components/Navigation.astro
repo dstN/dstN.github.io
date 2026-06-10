@@ -92,14 +92,22 @@ const navLinks = [
     // Nav background on scroll
     nav.classList.toggle("scrolled", window.scrollY > 40);
 
-    // Active link
+    // Active link — check if at page bottom first
+    const atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2;
     let currentId = "";
-    sections.forEach((section) => {
-      const el = section as HTMLElement;
-      if (window.scrollY >= el.offsetTop - 120) {
-        currentId = el.id;
-      }
-    });
+
+    if (atBottom) {
+      // At the bottom — highlight the last section
+      const lastSection = sections[sections.length - 1] as HTMLElement;
+      currentId = lastSection.id;
+    } else {
+      sections.forEach((section) => {
+        const el = section as HTMLElement;
+        if (window.scrollY >= el.offsetTop - 120) {
+          currentId = el.id;
+        }
+      });
+    }
 
     links.forEach((link) => {
       link.classList.toggle("active", link.getAttribute("href") === `#${currentId}`);
