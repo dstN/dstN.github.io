@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import path from "node:path";
 
 export default defineConfig({
   site: "https://dstn.github.io",
@@ -9,6 +10,11 @@ export default defineConfig({
     inlineStylesheets: "auto",
   },
   vite: {
+    resolve: {
+      alias: {
+        "@": path.resolve("./src"),
+      },
+    },
     build: {
       cssMinify: "lightningcss",
     },
