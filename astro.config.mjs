@@ -7,7 +7,7 @@ export default defineConfig({
   compressHTML: true,
   build: {
     assets: "_assets",
-    inlineStylesheets: "auto",
+    inlineStylesheets: "always",
   },
   vite: {
     resolve: {

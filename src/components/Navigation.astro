@@ -86,34 +86,38 @@ const navLinks = [
   const nav = document.getElementById("nav")!;
   const navLinksContainer = document.getElementById("nav-links")!;
   const links = navLinksContainer.querySelectorAll("a");
-  const sections = document.querySelectorAll("section[id]");
+  const sections = Array.from(document.querySelectorAll("section[id]")) as HTMLElement[];
+
+  // Cache offsetTop values — reads happen once, not on every scroll event
+  let sectionOffsets: { id: string; top: number }[] = [];
+
+  function cacheSectionOffsets() {
+    sectionOffsets = sections.map((el) => ({ id: el.id, top: el.offsetTop }));
+  }
 
   function updateScroll() {
-    // Nav background on scroll
-    nav.classList.toggle("scrolled", window.scrollY > 40);
+    // All reads first — no interleaved writes
+    const scrollY = window.scrollY;
+    const atBottom = window.innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
 
-    // Active link — check if at page bottom first
-    const atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2;
     let currentId = "";
-
     if (atBottom) {
-      // At the bottom — highlight the last section
-      const lastSection = sections[sections.length - 1] as HTMLElement;
-      currentId = lastSection.id;
+      currentId = sectionOffsets[sectionOffsets.length - 1]?.id ?? "";
     } else {
-      sections.forEach((section) => {
-        const el = section as HTMLElement;
-        if (window.scrollY >= el.offsetTop - 120) {
-          currentId = el.id;
-        }
-      });
+      for (const { id, top } of sectionOffsets) {
+        if (scrollY >= top - 120) currentId = id;
+      }
     }
 
+    // All writes at end — no forced reflow
+    nav.classList.toggle("scrolled", scrollY > 40);
     links.forEach((link) => {
       link.classList.toggle("active", link.getAttribute("href") === `#${currentId}`);
     });
   }
 
+  cacheSectionOffsets();
+  window.addEventListener("resize", cacheSectionOffsets, { passive: true });
   window.addEventListener("scroll", updateScroll, { passive: true });
   updateScroll();
 
