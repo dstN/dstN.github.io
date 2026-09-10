@@ -57,7 +57,7 @@ export const projects: Project[] = [
     name: "GourMerge",
     tier: "featured",
     category: "web",
-    pitch: "Git for recipes — branches, commits, forks and diffable merge requests, applied to cooking.",
+    pitch: "Git for recipes: branches, commits, forks and diffable merge requests, applied to cooking.",
     summary:
       "Recipes are treated as repositories. You branch a dish, commit changes as full snapshots, fork someone else's version, and open a diffable GourMerge Request to propose your edits back. 69 API endpoints across 28 tables, with passkey auth and four languages.",
     proof:
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     category: "web",
     pitch: "Privacy-first job application tracker that never sends your data anywhere.",
     summary:
-      "A Kanban board, PDF autofill, analytics and backups for job hunting — running entirely in the browser. Applications live in IndexedDB, PDF attachments in OPFS. No account, no server-side database, nothing to breach.",
+      "A Kanban board, PDF autofill, analytics and backups for job hunting, all running in the browser. Applications live in IndexedDB, PDF attachments in OPFS. No account, no server-side database, nothing to breach.",
     proof:
       "Audited against WCAG 2.2 AAA rather than AA, via automated axe-core scans across every route, theme and viewport.",
     stack: ["SvelteKit 2", "Svelte 5 Runes", "Dexie 4", "IndexedDB + OPFS", "axe-core", "PWA"],
@@ -139,7 +139,8 @@ export const projects: Project[] = [
     tier: "shipped",
     category: "web",
     pitch: "Search and explore a downloaded Twitter/X export locally, with nothing uploaded.",
-    proof: "The whole archive is unzipped, parsed and searched in the browser — personal data never reaches a server.",
+    proof:
+      "The whole archive is unzipped, parsed and searched in the browser, so personal data never reaches a server.",
     stack: ["Vue 3", "Vite 8", "zip.js", "Tailwind CSS 4", "vue-i18n"],
     links: { live: "https://twittrarchivr.vercel.app" },
     shot: {
@@ -196,7 +197,7 @@ export const projects: Project[] = [
     tier: "index",
     category: "tools",
     pitch: "Self-hosted accessibility audit microservice running Playwright and axe-core scans.",
-    proof: "Generated reports are fully offline-capable — base64 fonts, inline SVGs, zero CDN dependencies.",
+    proof: "Generated reports work fully offline: base64 fonts, inline SVGs, zero CDN dependencies.",
     stack: ["Fastify 5", "Drizzle ORM", "MariaDB 11", "Playwright", "Docker"],
     links: {},
   },
@@ -286,7 +287,7 @@ export const projects: Project[] = [
     category: "other",
     pitch: "Existentialist neo-noir detective RPG in Godot, set in an occupied dieselpunk Paris.",
     proof:
-      "CI verifies the whole project headlessly — import, compile sweep, boot smoke test, unit tests — with no editor GUI.",
+      "CI verifies the whole project headlessly, with no editor GUI: import, compile sweep, boot smoke test, unit tests.",
     stack: ["Godot 4.5", "GDScript 2.0", "GdUnit4"],
     links: {},
     note: "work in progress",
