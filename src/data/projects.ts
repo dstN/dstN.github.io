@@ -202,6 +202,18 @@ export const projects: Project[] = [
     links: {},
   },
   {
+    slug: "nedflichs",
+    name: "Ned Flichs",
+    tier: "index",
+    status: "wip",
+    category: "web",
+    pitch: "Streaming picks matched to your mood, the time you have and the access features you need.",
+    proof:
+      "Accessibility is a filter rather than an afterthought: titles can be narrowed to SDH subtitles, audio description or a low-sensory cut.",
+    stack: ["Astro 7", "Svelte 5", "Hono", "Drizzle", "MySQL", "Better Auth"],
+    links: {},
+  },
+  {
     slug: "scanland",
     name: "scaNLand",
     tier: "index",
