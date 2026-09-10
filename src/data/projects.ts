@@ -168,7 +168,8 @@ export const projects: Project[] = [
     tier: "shipped",
     category: "tools",
     pitch: "Pure-CSS framework rooted in the golden ratio, with zero JavaScript runtime.",
-    proof: "Built on CSS Layers, oklch(), container queries and @scope, published as @dstn/remcss.",
+    proof:
+      "A unit test forbids every px value in the source, so the golden-ratio rem scale cannot quietly rot.",
     stack: ["CSS Layers", "oklch()", "Container Queries", "@scope"],
     links: { live: "https://remcss.vercel.app", npm: "https://www.npmjs.com/package/@dstn/remcss" },
     shot: {
