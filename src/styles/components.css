@@ -740,6 +740,22 @@ html.light .shot-img--light {
   font-size: 1rem;
   font-weight: 600;
   color: var(--ink-strong);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* Maturity marker: states that a project is unfinished. Deliberately muted —
+   it is an honesty signal, not a highlight, so it must not out-shout the name. */
+.work-status {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  padding: 0.1em 0.45em;
+  white-space: nowrap;
 }
 
 .work-pitch {

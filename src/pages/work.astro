@@ -53,7 +53,14 @@ const live = projects.filter((p) => p.links.live).length;
                   return (
                     <article class="work-row">
                       <div class="work-row-main">
-                        <h3 class="work-name">{project.name}</h3>
+                        <h3 class="work-name">
+                          {project.name}
+                          {project.status && (
+                            <span class="work-status">
+                              {project.status === "scaffold" ? "Scaffold" : "Work in progress"}
+                            </span>
+                          )}
+                        </h3>
                         <p class="work-pitch">{project.pitch}</p>
                         {project.proof && <p class="work-proof">{project.proof}</p>}
                         <p class="work-stack">{project.stack.join(" · ")}</p>

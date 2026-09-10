@@ -5,6 +5,7 @@
  * in PROJECTS.md or the repo, it does not belong in this file.
  */
 
+export type Status = "wip" | "scaffold";
 export type Tier = "featured" | "shipped" | "index";
 export type Category = "web" | "mobile" | "tools" | "content" | "other";
 
@@ -21,6 +22,11 @@ export interface Project {
   slug: string;
   name: string;
   tier: Tier;
+  /**
+   * Maturity, separate from `tier` (which is prominence). Omit when the
+   * project is finished and running. Only set what PROJECTS.md states.
+   */
+  status?: Status;
   category: Category;
   /** One line, index level. */
   pitch: string;
@@ -197,6 +203,7 @@ export const projects: Project[] = [
     slug: "scanland",
     name: "scaNLand",
     tier: "index",
+    status: "wip",
     category: "mobile",
     pitch: "Offline camera-OCR scanner that identifies producers from EU food approval numbers.",
     proof: "The full 16,000-entry lookup database ships inside the app, so scanning works with no connection at all.",
@@ -207,6 +214,7 @@ export const projects: Project[] = [
     slug: "worldcoup",
     name: "Weltcoup",
     tier: "index",
+    status: "wip",
     category: "mobile",
     pitch: "Satirical Flutter collectible-album game with gacha mechanics and local peer-to-peer trading.",
     proof: "Offline-first SQLite with server sync, plus real P2P trading over Bluetooth and WiFi Direct.",
@@ -227,6 +235,7 @@ export const projects: Project[] = [
     slug: "tower67",
     name: "tower67",
     tier: "index",
+    status: "scaffold",
     category: "web",
     pitch: "2D air-traffic-control game driven by mouse or voice through one shared command pipeline.",
     proof:
@@ -250,6 +259,7 @@ export const projects: Project[] = [
     slug: "wc26-dashboard",
     name: "WC26 Data Engine",
     tier: "index",
+    status: "wip",
     category: "content",
     pitch: "Parses FIFA World Cup 2026 PDF reports into an analytics dashboard over 96 matches and 1,248 players.",
     proof:
@@ -271,6 +281,7 @@ export const projects: Project[] = [
     slug: "detectivegame",
     name: "detectivegame",
     tier: "index",
+    status: "wip",
     category: "other",
     pitch: "Existentialist neo-noir detective RPG in Godot, set in an occupied dieselpunk Paris.",
     proof:
