@@ -145,6 +145,31 @@ const SITES = [
     theme: (mode) => ({ theme: mode }),
     frames: [{ name: "docs", path: "/" }],
   },
+  {
+    slug: "lawnetz",
+    base: "https://lawnetz.de",
+    theme: (mode) => ({ "lawnetz-theme": mode }),
+    // German is the default and unprefixed; English lives under /en. The
+    // English statute slugs carry an englisch_ prefix.
+    frames: [
+      { name: "home", path: "/en" },
+      { name: "law", path: "/en/englisch_bgb" },
+    ],
+  },
+  {
+    slug: "tower67",
+    // Project site under a sub-path, so frame paths are relative (no leading
+    // slash) or they would resolve against the domain root.
+    base: "https://dstn.github.io/tower67/",
+    // Retro CRT look, one palette by design - no theme switch in the repo.
+    singleTheme: true,
+    // The game has no phone layout yet; the overlays pile up at 390px. Only
+    // the thumb is shown for it anyway.
+    viewports: ["desktop"],
+    // ?seed=N starts free play directly instead of opening the menu, and pins
+    // the traffic so two runs produce the same frame.
+    frames: [{ name: "game", path: "?seed=3" }],
+  },
 ];
 
 /** Kills anything that would make two runs differ. */
@@ -187,6 +212,10 @@ async function capture(browser, site, frame, mode, vpName) {
     reducedMotion: "reduce",
     locale: LOCALE,
     timezoneId: "Europe/Berlin",
+    // FREEZE_CSS goes in as an inline <style>; a site with `style-src 'self'`
+    // (tower67) would reject it and the capture would fail. Only loosens what
+    // this throwaway context may do, never what the page does.
+    bypassCSP: true,
   });
 
   if (site.cookies) {
@@ -361,12 +390,13 @@ async function run() {
       }
 
       const modes = site.singleTheme ? ["dark"] : ["dark", "light"];
+      const viewports = site.viewports ?? Object.keys(VIEWPORTS);
 
       for (const frame of frames) {
         const luma = {};
 
         for (const mode of modes) {
-          for (const vpName of Object.keys(VIEWPORTS)) {
+          for (const vpName of viewports) {
             process.stdout.write(`  ${site.slug}/${frame.name} ${mode} ${vpName} ... `);
             try {
               const png = await capture(browser, site, frame, mode, vpName);
