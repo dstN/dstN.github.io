@@ -1,5 +1,5 @@
 ---
-import { projects, featured, shipped } from "../data/projects";
+import { projects, featured, shipped, statusLabel } from "../data/projects";
 import ProjectShot from "./ProjectShot.astro";
 import ProjectLinks from "./ProjectLinks.astro";
 
@@ -52,7 +52,10 @@ const total = projects.length;
               )}
             </div>
             <div class="project-row-text">
-              <h4 class="project-name">{project.name}</h4>
+              <h4 class="project-name">
+                {project.name}
+                {project.status && <span class="work-status">{statusLabel[project.status]}</span>}
+              </h4>
               <p class="project-desc">{project.pitch}</p>
               <p class="project-stack">{project.stack.join(" · ")}</p>
             </div>

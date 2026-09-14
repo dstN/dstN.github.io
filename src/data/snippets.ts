@@ -54,6 +54,48 @@ export const snippets: Snippet[] = [
 };`,
   },
   {
+    slug: "lawnetz",
+    summary: "Checking 6,130 laws for changes with conditional HEAD requests instead of downloads",
+    source: "lawnetz.de · scripts/sync-daily.ts",
+    lang: "ts",
+    code: `if (!force && currentEntry?.etag) {
+  headers['If-None-Match'] = currentEntry.etag;
+}
+if (!force && currentEntry?.lastModified) {
+  headers['If-Modified-Since'] = currentEntry.lastModified;
+}
+
+const res = await fetch(\`https://www.gesetze-im-internet.de/\${slug}/xml.zip\`, {
+  method: 'HEAD',
+  headers,
+});
+
+if (res.status === 304) {
+  // Law has not changed since last check
+  skippedUnchanged++;
+  return;
+}
+
+if (res.status === 404) {
+  // Obsolete or repealed law with no XML archive
+  notFoundCount++;
+  manifest[slug] = {
+    ...currentEntry,
+    status: 'not_found',
+    lastSynced: new Date().toISOString(),
+  };
+  return;
+}
+
+if (res.status === 200) {
+  const etag = res.headers.get('etag') || undefined;
+  const lastModified = res.headers.get('last-modified') || undefined;
+  toUpdate.push({ slug, etag, lastModified });
+  return;
+}
+// ... the surrounding try/catch queues any other status, or a failed HEAD, for a full download`,
+  },
+  {
     slug: "gourmerge",
     summary: "Diffing two recipe commits by indexing both sides, not walking a tree",
     source: "GourMerge · server/utils/diff.ts",

@@ -9,6 +9,12 @@ export type Status = "wip" | "scaffold";
 export type Tier = "featured" | "shipped" | "index";
 export type Category = "web" | "mobile" | "tools" | "content" | "other";
 
+/** Visible wording for a status, shared by the home page and /work. */
+export const statusLabel: Record<Status, string> = {
+  wip: "Work in progress",
+  scaffold: "Scaffold",
+};
+
 export interface ProjectShot {
   /**
    * Frame name from scripts/shots.mjs — files are <slug>-<frame>-<theme>-<size>.webp.
@@ -103,6 +109,24 @@ export const projects: Project[] = [
       alt: "EuroDraft landing page showing the dream team draft concept",
     },
   },
+  {
+    slug: "lawnetz",
+    name: "LawNetz",
+    tier: "featured",
+    category: "content",
+    pitch:
+      "A modern, responsive replacement for gesetze-im-internet.de: the same 6,130 federal statutes and 135 English translations, readable on a phone, searchable, no tracking.",
+    summary:
+      "The official gesetze-im-internet.de still serves its pages without a phone layout. LawNetz mirrors its complete stock into MySQL, 6,130 statutes and regulations plus the 135 English translations from the Federal Ministry of Justice, and renders it server-side with a responsive layout, in-browser full-text search, both themes and Gmail-style keyboard shortcuts. A delta sync checks each law with a conditional HEAD request and downloads only what changed.",
+    proof:
+      "Held to WCAG 2.2 AAA in CI, not AA: axe-core scans every route in both themes with the 7:1 enhanced-contrast rule switched on.",
+    stack: ["Astro 7 SSR", "Drizzle ORM", "MySQL", "Pagefind", "axe-core", "Passenger"],
+    links: { live: "https://lawnetz.de", source: "https://github.com/dstN/lawnetz.de" },
+    shot: {
+      frame: "law",
+      alt: "LawNetz statute page for the German Civil Code with its section search and table of contents",
+    },
+  },
 
   // ─── Shipped ─────────────────────────────────────────────────────────────
   {
@@ -178,6 +202,23 @@ export const projects: Project[] = [
       alt: "remCSS documentation site showing the framework's type scale",
     },
   },
+  {
+    slug: "tower67",
+    name: "tower67",
+    tier: "shipped",
+    status: "wip",
+    category: "web",
+    pitch:
+      "Retro 2D tower-control game played by mouse, keyboard or voice. Every input becomes a radio call and goes through the same parser.",
+    proof:
+      "Speech recognition (Vosk) and the pilots' voices (Piper) run in the browser on WASM models served from the site itself; an end-to-end test fails if a single request leaves the origin.",
+    stack: ["Vanilla TypeScript", "Canvas 2D", "Web Audio", "Vosk + Piper (WASM)", "Playwright + axe"],
+    links: { live: "https://dstn.github.io/tower67/", source: "https://github.com/dstN/tower67" },
+    shot: {
+      frame: "game",
+      alt: "tower67 game view: a pixel-art airfield with runway 27, taxiways and two dot-matrix printers logging the radio traffic",
+    },
+  },
 
   // ─── Index ───────────────────────────────────────────────────────────────
   {
@@ -244,19 +285,6 @@ export const projects: Project[] = [
     proof: "Gemini handles both live web research and cost-efficient batch processing across many artists at once.",
     stack: ["Svelte 5", "FastAPI", "SQLAlchemy 2.0", "Google Gemini"],
     links: {},
-  },
-  {
-    slug: "tower67",
-    name: "tower67",
-    tier: "index",
-    status: "scaffold",
-    category: "web",
-    pitch: "2D air-traffic-control game driven by mouse or voice through one shared command pipeline.",
-    proof:
-      "A custom ESLint rule enforces the one-way dependency from the framework-free core to its adapters, and a test guarantees mouse and voice input produce identical commands.",
-    stack: ["Vanilla TypeScript", "Canvas 2D", "Vite 8", "Vitest 4", "Zero runtime deps"],
-    links: { source: "https://github.com/dstN/tower67" },
-    note: "work in progress",
   },
   {
     slug: "mainstreet40",

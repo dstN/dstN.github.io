@@ -5,7 +5,7 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import ProjectShot from "../components/ProjectShot.astro";
 import ProjectLinks from "../components/ProjectLinks.astro";
-import { projects, categories, byCategory } from "../data/projects";
+import { projects, categories, byCategory, statusLabel } from "../data/projects";
 import { snippetFor } from "../data/snippets";
 
 const total = projects.length;
@@ -62,11 +62,7 @@ const live = projects.filter((p) => p.links.live).length;
                       <div class="work-row-main">
                         <h3 class="work-name">
                           {project.name}
-                          {project.status && (
-                            <span class="work-status">
-                              {project.status === "scaffold" ? "Scaffold" : "Work in progress"}
-                            </span>
-                          )}
+                          {project.status && <span class="work-status">{statusLabel[project.status]}</span>}
                         </h3>
                         <p class="work-pitch">{project.pitch}</p>
                         {project.proof && <p class="work-proof">{project.proof}</p>}

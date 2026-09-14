@@ -136,6 +136,47 @@
       }
     }
   },
+  "lawnetz": {
+    "singleTheme": false,
+    "frames": {
+      "law": {
+        "dark": {
+          "desktop": {
+            "file": "lawnetz-law-dark-desktop.webp",
+            "width": 1440,
+            "height": 900
+          },
+          "mobile": {
+            "file": "lawnetz-law-dark-mobile.webp",
+            "width": 780,
+            "height": 1688
+          },
+          "thumb": {
+            "file": "lawnetz-law-dark-thumb.webp",
+            "width": 640,
+            "height": 400
+          }
+        },
+        "light": {
+          "desktop": {
+            "file": "lawnetz-law-light-desktop.webp",
+            "width": 1440,
+            "height": 900
+          },
+          "mobile": {
+            "file": "lawnetz-law-light-mobile.webp",
+            "width": 780,
+            "height": 1688
+          },
+          "thumb": {
+            "file": "lawnetz-law-light-thumb.webp",
+            "width": 640,
+            "height": 400
+          }
+        }
+      }
+    }
+  },
   "remcss": {
     "singleTheme": false,
     "frames": {
@@ -164,6 +205,20 @@
         "dark": {
           "thumb": {
             "file": "threadsdelete-home-dark-thumb.webp",
+            "width": 640,
+            "height": 400
+          }
+        }
+      }
+    }
+  },
+  "tower67": {
+    "singleTheme": true,
+    "frames": {
+      "game": {
+        "dark": {
+          "thumb": {
+            "file": "tower67-game-dark-thumb.webp",
             "width": 640,
             "height": 400
           }
