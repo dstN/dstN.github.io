@@ -209,7 +209,7 @@ export const projects: Project[] = [
     status: "wip",
     category: "web",
     pitch:
-      "Retro 2D tower-control game played by mouse, keyboard or voice. Every input becomes a radio call and goes through the same parser.",
+      "Retro 2D tower-control game played by mouse, keyboard or voice across five schematic airfields, with flight plans, pushback and emergencies. Every input becomes a radio call and goes through the same parser.",
     proof:
       "Speech recognition (Vosk) and the pilots' voices (Piper) run in the browser on WASM models served from the site itself; an end-to-end test fails if a single request leaves the origin.",
     stack: ["Vanilla TypeScript", "Canvas 2D", "Web Audio", "Vosk + Piper (WASM)", "Playwright + axe"],
