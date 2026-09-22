@@ -213,7 +213,8 @@ export const projects: Project[] = [
     proof:
       "Speech recognition (Vosk) and the pilots' voices (Piper) run in the browser on WASM models served from the site itself; an end-to-end test fails if a single request leaves the origin.",
     stack: ["Vanilla TypeScript", "Canvas 2D", "Web Audio", "Vosk + Piper (WASM)", "Playwright + axe"],
-    links: { live: "https://dstn.github.io/tower67/", source: "https://github.com/dstN/tower67" },
+    links: {},
+    note: "work in progress",
     shot: {
       frame: "game",
       alt: "tower67 game view: a pixel-art airfield with runway 27, taxiways and two dot-matrix printers logging the radio traffic",

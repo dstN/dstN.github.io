@@ -158,9 +158,9 @@ const SITES = [
   },
   {
     slug: "tower67",
-    // Project site under a sub-path, so frame paths are relative (no leading
-    // slash) or they would resolve against the domain root.
-    base: "https://dstn.github.io/tower67/",
+    // Own subdomain since 2026-09-19 (Netcup, static). The Pages URL is gone
+    // and the repo is private; this deployment is what the thumb shows.
+    base: "https://tower67.rntm.de/",
     // Retro CRT look, one palette by design - no theme switch in the repo.
     singleTheme: true,
     // The game has no phone layout yet; the overlays pile up at 390px. Only
