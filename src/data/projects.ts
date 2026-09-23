@@ -80,9 +80,9 @@ export const projects: Project[] = [
     name: "bewerby",
     tier: "featured",
     category: "web",
-    pitch: "Privacy-first job application tracker that never sends your data anywhere.",
+    pitch: "Privacy-first job application tracker that keeps your applications on your own device.",
     summary:
-      "A Kanban board, PDF autofill, analytics and backups for job hunting, all running in the browser. Applications live in IndexedDB, PDF attachments in OPFS. No account, no server-side database, nothing to breach.",
+      "A Kanban board, analytics and backups for job hunting, all running in the browser. Applications live in IndexedDB, PDF attachments in OPFS. A posting fills the form from a PDF, from pasted text or from a link, and the board exports a proof of applications for the German employment agency as a print-ready PDF or a spreadsheet.",
     proof:
       "Audited against WCAG 2.2 AAA rather than AA, via automated axe-core scans across every route, theme and viewport.",
     stack: ["SvelteKit 2", "Svelte 5 Runes", "Dexie 4", "IndexedDB + OPFS", "axe-core", "PWA"],
