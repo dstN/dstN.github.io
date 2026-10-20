@@ -29,9 +29,6 @@
       </div>
 
       <form class="contact-form" id="contact-form" method="POST">
-        <input type="hidden" name="subject" value="New message from dstN Portfolio" />
-        <input type="hidden" name="from_name" value="Portfolio Contact Form" />
-
         <div class="form-field">
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required minlength="2" autocomplete="name" />
@@ -47,7 +44,13 @@
           <textarea id="contact-message" name="message" required minlength="10" rows="5"></textarea>
         </div>
 
-        <div id="form-status" style="display:none"></div>
+        <!-- Honeypot: people never see or fill this field; when it is filled, nothing is sent. -->
+        <div class="form-hp" aria-hidden="true">
+          <label for="contact-website">Website</label>
+          <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div id="form-status" class="form-status" role="status"></div>
 
         <button type="submit" class="btn btn-primary" id="contact-submit" style="width:100%;">
           Send Message
@@ -60,56 +63,80 @@
 <script>
   // Email obfuscation
   const emailLink = document.getElementById("contact-email-link");
+  const addr = emailLink ? emailLink.dataset.u + "@" + emailLink.dataset.d : "";
   if (emailLink) {
-    const u = emailLink.dataset.u;
-    const d = emailLink.dataset.d;
-    const addr = u + "@" + d;
     emailLink.setAttribute("href", "mailto:" + addr);
     emailLink.textContent = addr;
   }
 
-  // Form setup
+  // The form goes as JSON to Dustin's own mail relay (repo dstN/kontakt-relay), which allows this origin. The browser
+  // validates the fields on submit. On any failure the text stays in the fields and the status line names the mailbox.
+  const RELAY = "https://contact.yinside.de/phpmailer.php";
   const form = document.getElementById("contact-form") as HTMLFormElement;
   const statusEl = document.getElementById("form-status") as HTMLElement;
   const submitBtn = document.getElementById("contact-submit") as HTMLButtonElement;
+  const emailField = document.getElementById("contact-email") as HTMLInputElement;
+  const trap = document.getElementById("contact-website") as HTMLInputElement;
+  // while a message is on its way the button stays focusable (aria-disabled, not disabled), so focus is not lost
+  let sending = false;
 
-  const EP_PARTS = ["https://api", "web3forms", "com/submit"];
-  const AK = "1b0a9405-26d5-4a0f-8a0f-4689bdab8588";
-
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending...";
-      statusEl.style.display = "none";
-
-      try {
-        const formData = new FormData(form);
-        formData.append("access_key", AK);
-        const endpoint = EP_PARTS[0] + "." + EP_PARTS[1] + "." + EP_PARTS[2];
-
-        const res = await fetch(endpoint, {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-
-        if (data.success) {
-          statusEl.className = "form-status success";
-          statusEl.textContent = "Message sent! I'll get back to you soon.";
-          statusEl.style.display = "block";
-          form.reset();
-        } else {
-          throw new Error(data.message || "Failed");
-        }
-      } catch (err) {
-        statusEl.className = "form-status error";
-        statusEl.textContent = "Something went wrong. Please try emailing me directly.";
-        statusEl.style.display = "block";
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Send Message";
-      }
-    });
+  function show(kind: "success" | "error" | "", text: string, mailbox = false) {
+    statusEl.className = "form-status" + (kind ? " " + kind : "");
+    statusEl.textContent = text;
+    if (mailbox && addr) {
+      const a = document.createElement("a");
+      a.href = "mailto:" + addr;
+      a.textContent = addr;
+      statusEl.append(" ", a, ".");
+    }
   }
+
+  const failed = () => show("error", "Your message could not be sent. Please email me directly at", true);
+
+  emailField.addEventListener("input", () => emailField.removeAttribute("aria-invalid"));
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (sending) return;
+    // a bot filled the trap: nothing leaves the page, a person who somehow did gets the mailbox
+    if (trap.value) return failed();
+
+    const data = new FormData(form);
+    const value = (key: string) => String(data.get(key) ?? "").trim();
+    sending = true;
+    submitBtn.setAttribute("aria-disabled", "true");
+    show("", "Sending your message...");
+
+    try {
+      const res = await fetch(RELAY, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: value("name"), email: value("email"), message: value("message") }),
+        signal: AbortSignal.timeout(20_000),
+      });
+      const body: unknown = await res.json().catch(() => null);
+      const isObj = typeof body === "object" && body !== null;
+
+      if (res.ok && isObj && "success" in body && body.success === true) {
+        form.reset();
+        show("success", "Message sent! I'll get back to you soon.");
+      } else if (res.status === 400) {
+        const error = isObj && "error" in body && typeof body.error === "string" ? body.error : "";
+        if (/email/i.test(error)) {
+          emailField.setAttribute("aria-invalid", "true");
+          emailField.focus();
+          show("error", "Please check your email address.");
+        } else {
+          show("error", "Please fill in your name, email and message.");
+        }
+      } else {
+        failed();
+      }
+    } catch {
+      failed();
+    } finally {
+      sending = false;
+      submitBtn.removeAttribute("aria-disabled");
+    }
+  });
 </script>

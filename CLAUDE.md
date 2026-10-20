@@ -14,7 +14,7 @@
 | **CSS Minification** | LightningCSS | latest | Via Vite integration |
 | **Fonts** | Local (via @dstn/fli) | latest | GDPR-compliant, self-hosted Lexend |
 | **Icons** | Inline SVGs | — | No external icon library |
-| **Contact** | Web3Forms | — | Client-side form submission |
+| **Contact** | Own mail relay | — | JSON POST to contact.yinside.de (repo dstN/kontakt-relay) |
 | **AI Skills** | impeccable (pbakaus) | latest | Design language skill installed via `npx skills add` |
 | **Deployment** | GitHub Pages | — | `dist/` output via GitHub Actions |
 
@@ -31,7 +31,7 @@ JavaScript is only added via <script> tags for interactive islands.
 Interactive components (have <script> tags):
 ✅ Navigation (scroll spy, mobile menu, theme toggle)
 ✅ HeroSection (role crossfade, email obfuscation)
-✅ ContactSection (form validation, Web3Forms submission)
+✅ ContactSection (form validation, submission to the mail relay)
 ✅ Footer (legal modal open/close)
 
 Static components (zero JS):
