@@ -1149,6 +1149,12 @@ html.light .work-snippet .astro-code span {
   font-size: 0.8125rem;
   padding: var(--s-md) var(--s-lg);
   border-radius: var(--r-sm);
+  /* empty, the live region stays in the page (it must exist before its text) but takes no room, the form's gap included */
+  &:empty {
+    padding: 0;
+    margin-block-start: calc(-1 * var(--s-lg));
+  }
+  & a { color: inherit; text-decoration: underline; }
   &.success {
     background: oklch(from var(--success) l c h / 0.1);
     color: var(--success);
@@ -1159,6 +1165,14 @@ html.light .work-snippet .astro-code span {
     color: var(--destructive);
     border: 1px solid oklch(from var(--destructive) l c h / 0.2);
   }
+}
+
+.form-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 /* ─── Buttons ─── */
