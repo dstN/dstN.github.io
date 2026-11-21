@@ -1,4 +1,4 @@
-# CLAUDE.md — dstn.github.io Portfolio
+# CLAUDE.md: dstn.github.io Portfolio
 
 > **Das Gesetzbuch für dieses Projekt.** Jeder Prompt, jede Änderung, jedes Feature muss diesen Regeln folgen.
 
@@ -10,7 +10,7 @@
 |:---|:---|:---|:---|
 | **Framework** | Astro | 6.4.x | Static output, zero-JS-by-default, Islands Architecture |
 | **Language** | TypeScript | 5.x | Strict Mode via Astro preset |
-| **Styling** | Vanilla CSS | Native | CSS nesting, oklch(), custom properties — no Tailwind |
+| **Styling** | Vanilla CSS | Native | CSS nesting, oklch(), custom properties, no Tailwind |
 | **CSS Minification** | LightningCSS | latest | Via Vite integration |
 | **Fonts** | Local (via @dstn/fli) | latest | GDPR-compliant, self-hosted Lexend |
 | **Icons** | Inline SVGs | — | No external icon library |
@@ -100,9 +100,9 @@ color: oklch(0.65 0.25 330);  /* hardcoded, use variable */
 
 ### Identity: PCB Green + Copper ("Drenched")
 
-The design language is **"circuit board under a macro lens"** — technically dense, structurally elegant, slightly alien. Not performing "developer" — being one.
+The design language is **"circuit board under a macro lens"**: technically dense, structurally elegant, slightly alien. It does not perform "developer" (see the stock-imagery ban in Section 5).
 
-**Color strategy: Drenched.** The background environment IS the brand. Color is not an accent; it is the atmospheric space content lives within.
+**Color strategy: Drenched.** The background is the brand color. Content sits inside that tint; color is not limited to accents.
 
 | Role | Dark Mode | Light Mode | Usage |
 |:---|:---|:---|:---|
@@ -117,9 +117,9 @@ The design language is **"circuit board under a macro lens"** — technically de
 | **Border** | `oklch(0.28 0.02 160)` | `oklch(0.85 0.01 160)` | Dividers, card edges |
 
 **Rules:**
-- Every neutral is chromatic — zero pure grays. All neutrals carry chroma `0.01–0.025` at hue 160°.
+- Every neutral is chromatic, with zero pure grays. All neutrals carry chroma `0.01–0.025` at hue 160°.
 - No indigo anywhere. Indigo is an AI-default dark pattern.
-- Copper accent is surgical — logo dot, "current" badge, hover underlines, timeline node. Not a flood.
+- Copper accent is surgical: logo dot, "current" badge, hover underlines, timeline node.
 - Dark mode is the primary design target (default, no class). Light mode adds `.light` class.
 - Dark mode reduces body text weight to 350 (light text on dark reads heavier).
 
@@ -236,7 +236,7 @@ public/
 
 ---
 
-## 8. Workflow — Adding New Features
+## 8. Workflow: Adding New Features
 
 ### Checklist:
 
@@ -250,7 +250,7 @@ public/
    - Respects dark/light mode (`.light` class, not `.dark`)
    - Respects `prefers-reduced-motion`
    - Mobile-first responsive
-   - Passes the "could someone say AI made this?" test — if yes, redesign
+   - Passes the "could someone say AI made this?" test. If yes, redesign
 
 3. **TypeScript-Check:**
    - No `any` types

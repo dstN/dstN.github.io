@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   Components — Schematic
+   Components: Schematic
    Dense, precise, structurally varied.
    ═══════════════════════════════════════════════════════════ */
 
@@ -297,7 +297,7 @@ html:not(.light) .opening-image img {
   margin-bottom: var(--s-xl);
 }
 
-/* ─── Projects — three densities, no card grid ─── */
+/* ─── Projects: three densities, no card grid ─── */
 
 .projects-head {
   display: flex;
@@ -347,7 +347,7 @@ html:not(.light) .opening-image img {
   color: var(--ink-muted);
 }
 
-/* ─── Case studies — asymmetric, alternating ─── */
+/* ─── Case studies: asymmetric, alternating ─── */
 
 .case-studies {
   margin-top: var(--s-2xl);
@@ -439,7 +439,7 @@ html:not(.light) .opening-image img {
   min-width: 0;
 }
 
-/* ─── Shipped list — dense rows with a preview ─── */
+/* ─── Shipped list: dense rows with a preview ─── */
 
 .project-list {
   display: flex;
@@ -557,7 +557,7 @@ html:not(.light) .opening-image img {
 
 /* ─── Screenshots ───
    Both themes live in the DOM and CSS picks one. A display:none element never
-   intersects the viewport, so its lazy image is never fetched — only the active
+   intersects the viewport, so its lazy image is never fetched; only the active
    theme is downloaded. */
 
 .shot {
@@ -588,7 +588,7 @@ html.light .shot-img--light {
   display: block;
 }
 
-/* Feature variant — desktop and phone composed in CSS, not flattened into one
+/* Feature variant: desktop and phone composed in CSS, not flattened into one
    image. The container itself carries no frame; each capture brings its own, so
    the page ground shows through between them in either theme. */
 .shot--feature {
@@ -617,7 +617,7 @@ html.light .shot-img--light {
   border: 1px solid var(--rule);
   border-radius: 10px;
   /* Hard ring of page background knocks the phone out of the desktop shot.
-     Deliberately zero blur — border + blurred shadow is the banned ghost card. */
+     Deliberately zero blur: border + blurred shadow is the banned ghost card. */
   box-shadow: 0 0 0 4px var(--bg);
 }
 
@@ -751,8 +751,8 @@ html.light .shot-img--light {
   gap: var(--s-sm);
 }
 
-/* Maturity marker: states that a project is unfinished. Deliberately muted —
-   it is an honesty signal, not a highlight, so it must not out-shout the name. */
+/* Maturity marker: states that a project is unfinished. Deliberately muted:
+   it is an honesty signal and must not out-shout the name. */
 .work-status {
   font-size: 0.6875rem;
   font-weight: 500;
@@ -858,7 +858,7 @@ html.light .work-snippet .astro-code span {
   text-decoration: var(--shiki-light-text-decoration, inherit);
 }
 
-/* Tag pill — small, monochrome */
+/* Tag pill: small, monochrome */
 .tag {
   display: inline-block;
   padding: 2px var(--s-sm);
@@ -869,7 +869,7 @@ html.light .work-snippet .astro-code span {
   border-radius: 100px;
 }
 
-/* ─── Stack (Skills) — Spec sheet ─── */
+/* ─── Stack (Skills): Spec sheet ─── */
 
 .spec-sheet {
   display: flex;
@@ -913,13 +913,13 @@ html.light .work-snippet .astro-code span {
   font-weight: 500;
 }
 
-/* ─── Timeline (Experience) — Horizontal on desktop ─── */
+/* ─── Timeline (Experience): Horizontal on desktop ─── */
 
 /* Timeline container with scroll fade edges */
 .timeline-container {
   position: relative;
 
-  /* Right fade — shows more content ahead */
+  /* Right fade: shows more content ahead */
   &::after {
     content: "";
     position: absolute;
@@ -1054,7 +1054,7 @@ html.light .work-snippet .astro-code span {
   padding: 1px 6px;
 }
 
-/* ─── Contact — Integrated, not isolated ─── */
+/* ─── Contact: Integrated, not isolated ─── */
 
 .contact-layout {
   display: grid;

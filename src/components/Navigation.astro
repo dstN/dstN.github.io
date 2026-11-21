@@ -22,7 +22,7 @@ const navLinks = [
 <nav class="nav" id="nav" aria-label="Main navigation" data-spy={spy ? "on" : "off"}>
   <div class="nav-inner">
 
-    <a href={base || "#"} class="nav-logo" aria-label="dstN — back to top">
+    <a href={base || "#"} class="nav-logo" aria-label="dstN, back to top">
       dstN<span>.</span>
     </a>
 
@@ -74,7 +74,7 @@ const navLinks = [
 </nav>
 
 <script>
-  // Theme toggle — dark is default (no class), .light = light mode
+  // Theme toggle: dark is default (no class), .light = light mode
   const toggle = document.getElementById("theme-toggle")!;
   const sunIcon = document.getElementById("icon-sun")!;
   const moonIcon = document.getElementById("icon-moon")!;
@@ -94,7 +94,7 @@ const navLinks = [
     updateIcons();
   });
 
-  // Scroll spy — skipped on subpages, where the nav links point at another document.
+  // Scroll spy. Skipped on subpages, where the nav links point at another document.
   const nav = document.getElementById("nav")!;
   const navLinksContainer = document.getElementById("nav-links")!;
   const links = navLinksContainer.querySelectorAll("a");
@@ -103,7 +103,7 @@ const navLinks = [
     ? (Array.from(document.querySelectorAll("section[id]")) as HTMLElement[])
     : [];
 
-  // Cache offsetTop values — reads happen once, not on every scroll event
+  // Cache offsetTop values: reads happen once, not on every scroll event
   let sectionOffsets: { id: string; top: number }[] = [];
 
   function cacheSectionOffsets() {
@@ -111,7 +111,7 @@ const navLinks = [
   }
 
   function updateScroll() {
-    // All reads first — no interleaved writes
+    // All reads first, no interleaved writes
     const scrollY = window.scrollY;
     const atBottom = window.innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
 
@@ -124,7 +124,7 @@ const navLinks = [
       }
     }
 
-    // All writes at end — no forced reflow
+    // All writes at end, no forced reflow
     nav.classList.toggle("scrolled", scrollY > 40);
     if (!spyEnabled) return;
     links.forEach((link) => {

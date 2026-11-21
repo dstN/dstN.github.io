@@ -10,7 +10,7 @@ import "../styles/components.css";
 
 const {
   title = "dstN. | Frontend Developer",
-  description = "Portfolio of dstN — Frontend Developer from Hamburg. Building clean, performant, and accessible web experiences.",
+  description = "Portfolio of dstN, frontend developer from Hamburg. Fast, accessible websites and web apps.",
 } = Astro.props;
 
 // Derived per route so /work does not claim the homepage as its canonical.
@@ -40,7 +40,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://dstn.github
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content="Frontend Developer from Hamburg. Clean code, modern web." />
+    <meta name="twitter:description" content={description} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -59,7 +59,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://dstn.github
     <link rel="preload" href="/fonts/lexend/lexend-600.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/lexend/lexend-700.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Theme detection — prevents FOUC -->
+    <!-- Theme detection, prevents FOUC -->
     <!-- Default = dark (no class). "light" class = light mode. -->
     <script is:inline>
       (function(){

@@ -3,7 +3,7 @@
  * Theme- and viewport-aware project screenshot.
  *
  * The site switches themes with a `.light` class on <html>, which `<picture media>`
- * cannot read — so both themes sit in the DOM and CSS picks one. That costs nothing:
+ * cannot read, so both themes sit in the DOM and CSS picks one. That costs nothing:
  * a `display: none` element never intersects the viewport, so its `loading="lazy"`
  * image is not fetched, and `display: none` subtrees are not exposed to assistive
  * tech, so both copies can carry the same alt text without a double announcement.
@@ -69,7 +69,7 @@ const sources = themes.map((theme) => ({
 }));
 
 /** Only used to vary the alt text so the phone is not announced as a duplicate. */
-const phoneAlt = `${alt} — mobile layout`;
+const phoneAlt = `${alt}, mobile layout`;
 ---
 
 <div class:list={["shot", `shot--${variant}`, className]}>

@@ -2,7 +2,7 @@
  * Verbatim excerpts from the repos, shown on /work.
  *
  * These are copied out of the real source files, not written for display. Each
- * one has to carry actual logic — a config block or a doc comment proves
+ * one has to carry actual logic; a config block or a doc comment proves
  * nothing. Where something is cut for length it is marked with an elision
  * comment on its own line. `source` must always name the file it came from.
  */
@@ -10,7 +10,7 @@
 export interface Snippet {
   /** Matches Project.slug. */
   slug: string;
-  /** What the reader should notice — becomes the <summary> text. */
+  /** What the reader should notice. Becomes the <summary> text. */
   summary: string;
   source: string;
   lang: "js" | "ts";
@@ -39,7 +39,7 @@ export const snippets: Snippet[] = [
   },
   {
     slug: "fli",
-    summary: "Atomic write — a crashed run can never leave a half-written stylesheet",
+    summary: "Atomic write: a crashed run can never leave a half-written stylesheet",
     source: "fli · src/css.ts",
     lang: "ts",
     code: `const atomicWrite = async (filePath: string, content: string): Promise<void> => {

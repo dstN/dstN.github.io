@@ -1,7 +1,7 @@
 /**
  * Single source of truth for the Selected Work section and the /work index.
  *
- * Facts come from PROJECTS.md. Nothing here is embellished — if a claim is not
+ * Facts come from PROJECTS.md. Nothing here is embellished. If a claim is not
  * in PROJECTS.md or the repo, it does not belong in this file.
  */
 
@@ -17,7 +17,7 @@ export const statusLabel: Record<Status, string> = {
 
 export interface ProjectShot {
   /**
-   * Frame name from scripts/shots.mjs — files are <slug>-<frame>-<theme>-<size>.webp.
+   * Frame name from scripts/shots.mjs. Files are <slug>-<frame>-<theme>-<size>.webp.
    * Whether a site has one theme or two is read from shots.json, not declared here.
    */
   frame: string;
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     summary:
       "A Kanban board, analytics and backups for job hunting, all running in the browser. Applications live in IndexedDB, PDF attachments in OPFS. A posting fills the form from a PDF, from pasted text or from a link, and the board exports a proof of applications for the German employment agency as a print-ready PDF or a spreadsheet.",
     proof:
-      "Audited against WCAG 2.2 AAA rather than AA, via automated axe-core scans across every route, theme and viewport.",
+      "Audited against WCAG 2.2 AAA, the strictest level, via automated axe-core scans across every route, theme and viewport.",
     stack: ["SvelteKit 2", "Svelte 5 Runes", "Dexie 4", "IndexedDB + OPFS", "axe-core", "PWA"],
     links: { live: "https://bewerby.de" },
     shot: {
@@ -115,11 +115,11 @@ export const projects: Project[] = [
     tier: "featured",
     category: "content",
     pitch:
-      "A modern, responsive replacement for gesetze-im-internet.de: the same 6,130 federal statutes and 135 English translations, readable on a phone, searchable, no tracking.",
+      "A responsive replacement for gesetze-im-internet.de: the same 6,130 federal statutes and 135 English translations, readable on a phone, searchable, no tracking.",
     summary:
       "The official gesetze-im-internet.de still serves its pages without a phone layout. LawNetz mirrors its complete stock into MySQL, 6,130 statutes and regulations plus the 135 English translations from the Federal Ministry of Justice, and renders it server-side with a responsive layout, in-browser full-text search, both themes and Gmail-style keyboard shortcuts. A delta sync checks each law with a conditional HEAD request and downloads only what changed.",
     proof:
-      "Held to WCAG 2.2 AAA in CI, not AA: axe-core scans every route in both themes with the 7:1 enhanced-contrast rule switched on.",
+      "Held to WCAG 2.2 AAA in CI: axe-core scans every route in both themes with the 7:1 enhanced-contrast rule switched on.",
     stack: ["Astro 7 SSR", "Drizzle ORM", "MySQL", "Pagefind", "axe-core", "Passenger"],
     links: { live: "https://lawnetz.de", source: "https://github.com/dstN/lawnetz.de" },
     shot: {
@@ -194,7 +194,7 @@ export const projects: Project[] = [
     category: "tools",
     pitch: "Pure-CSS framework rooted in the golden ratio, with zero JavaScript runtime.",
     proof:
-      "A unit test forbids every px value in the source, so the golden-ratio rem scale cannot quietly rot.",
+      "A unit test forbids every px value in the source, so no px value can slip into the golden-ratio rem scale.",
     stack: ["CSS Layers", "oklch()", "Container Queries", "@scope"],
     links: { live: "https://remcss.vercel.app", npm: "https://www.npmjs.com/package/@dstn/remcss" },
     shot: {
@@ -251,7 +251,7 @@ export const projects: Project[] = [
     category: "web",
     pitch: "Streaming picks matched to your mood, the time you have and the access features you need.",
     proof:
-      "Accessibility is a filter rather than an afterthought: titles can be narrowed to SDH subtitles, audio description or a low-sensory cut.",
+      "Accessibility is one of the filters: titles can be narrowed to SDH subtitles, audio description or a low-sensory cut.",
     stack: ["Astro 7", "Svelte 5", "Hono", "Drizzle", "MySQL", "Better Auth"],
     links: {},
   },
@@ -262,7 +262,7 @@ export const projects: Project[] = [
     status: "wip",
     category: "mobile",
     pitch: "Offline camera-OCR scanner that identifies producers from EU food approval numbers.",
-    proof: "The full 16,000-entry lookup database ships inside the app, so scanning works with no connection at all.",
+    proof: "The full 16,000-entry lookup database ships inside the app, so scanning works offline.",
     stack: ["Ionic 8", "Vue 3", "Capacitor 8", "Fastify 5", "SQLite", "Turborepo"],
     links: {},
   },

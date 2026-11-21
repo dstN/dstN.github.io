@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   Global — PCB Green + Copper Drenched
+   Global: PCB Green + Copper Drenched
    "Circuit board under a macro lens"
    ═══════════════════════════════════════════════════════════ */
 
@@ -17,7 +17,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* ─── Font Face — Lexend ─── */
+/* ─── Font Face: Lexend ─── */
 
 @font-face {
   font-family: "Lexend";
@@ -55,24 +55,24 @@ html {
   font-display: swap;
 }
 
-/* ─── Tokens — Dark (default) ─── */
+/* ─── Tokens: Dark (default) ─── */
 
 :root {
   --font-sans: "Lexend", system-ui, -apple-system, sans-serif;
 
-  /* PCB Body — deep oxide green-black */
+  /* PCB Body: deep oxide green-black */
   --bg: oklch(0.12 0.02 155);
   --bg-subtle: oklch(0.15 0.018 155);
 
-  /* Surfaces — elevated green-black */
+  /* Surfaces: elevated green-black */
   --surface-1: oklch(0.17 0.018 155);
   --surface-2: oklch(0.21 0.022 155);
 
-  /* Primary — oxide green */
+  /* Primary: oxide green */
   --primary: oklch(0.62 0.10 155);
   --primary-dim: oklch(0.48 0.07 155);
 
-  /* Accent — warm copper */
+  /* Accent: warm copper */
   --accent: oklch(0.72 0.14 60);
   --accent-dim: oklch(0.56 0.10 60);
 
@@ -89,7 +89,7 @@ html {
   --destructive: oklch(0.60 0.20 25);
   --success: oklch(0.65 0.18 145);
 
-  /* Spacing — 4pt base */
+  /* Spacing: 4pt base */
   --s-2xs: 0.125rem;
   --s-xs: 0.25rem;
   --s-sm: 0.5rem;
@@ -102,7 +102,7 @@ html {
   --s-5xl: 6rem;
   --s-6xl: 8rem;
 
-  /* Containers — varied widths for rhythm */
+  /* Containers: varied widths for rhythm */
   --w-narrow: 680px;
   --w-base: 920px;
   --w-wide: 1120px;

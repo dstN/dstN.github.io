@@ -54,7 +54,7 @@ const LOCALE = "en-US";
 
 /**
  * `theme` maps a mode to localStorage entries seeded before first paint.
- * Sites honouring prefers-color-scheme need nothing extra — the browser
+ * Sites honouring prefers-color-scheme need nothing extra: the browser
  * context colorScheme already covers them.
  *
  * `storage` and `cookies` pin the app's own language, which the browser locale
@@ -116,7 +116,7 @@ const SITES = [
   {
     slug: "footyguess",
     base: "https://footyguess.yinside.de",
-    // Nuxt UI colorMode is disabled in this app - single theme by design.
+    // Nuxt UI colorMode is disabled in this app: single theme by design.
     singleTheme: true,
     frames: [{ name: "game", path: "/" }],
   },
@@ -135,7 +135,7 @@ const SITES = [
   {
     slug: "threadsdelete",
     base: "https://threadsdelete.vercel.app",
-    // No theme machinery in the repo at all - the site is dark-only by design.
+    // No theme machinery in the repo at all: the site is dark-only by design.
     singleTheme: true,
     frames: [{ name: "home", path: "/" }],
   },
@@ -161,7 +161,7 @@ const SITES = [
     // Own subdomain since 2026-09-19 (Netcup, static). The Pages URL is gone
     // and the repo is private; this deployment is what the thumb shows.
     base: "https://tower67.rntm.de/",
-    // Retro CRT look, one palette by design - no theme switch in the repo.
+    // Retro CRT look, one palette by design, no theme switch in the repo.
     singleTheme: true,
     // The game has no phone layout yet; the overlays pile up at 390px. Only
     // the thumb is shown for it anyway.
@@ -195,7 +195,7 @@ async function dismissConsent(page) {
         return selector;
       }
     } catch {
-      // Selector absent or not clickable - expected for most sites.
+      // Selector absent or not clickable, expected for most sites.
     }
   }
   return null;
@@ -230,7 +230,7 @@ async function capture(browser, site, frame, mode, vpName) {
         try {
           window.localStorage.setItem(key, value);
         } catch {
-          // Storage blocked - the colorScheme hint still applies.
+          // Storage blocked. The colorScheme hint still applies.
         }
       }
     }, entries);
